@@ -8,13 +8,11 @@ const PetPage = () => {
     location: "Manikonda2",
     description: "She is a very active, healthy & alert puppy looking for a loving home. If you looking to adopt her, then you can visit Blue Cross of Hyderabad Shelter and take her home on the last Sunday of the month (24th Aug 2023).",
     details: {
-      type: "Puppy ~0 to 5month~",
+      type: "Dog",
       gender: "Female",
       breed: "Indie",
-      neutered: "Yes",
       age: "3",
       shelter: "Blue Cross Of Hyderabad",
-      deworming: "First deworming completed"
     },
     relatedPets: [
       { name: "Lilly", location: "Manikonda1", type: "Puppy ~0 to 5month~" },
