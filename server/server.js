@@ -4,6 +4,7 @@ const cookieparser=require('cookie-parser')
 const cors=require('cors')
 const authrouter= require('./routes/auth/auth-routes')
 const adminProductsRouter=require('./routes/admin/products-routes')
+const petRouter = require('./routes/allpets')
 //require('dotenv').config();
 // create database || create a separate file also and import it than
 mongoose.connect('mongodb+srv://prsondhi:piyush123@cluster0.a6ms7.mongodb.net/')
@@ -36,7 +37,8 @@ app.use(
 app.use(cookieparser());
 app.use(express.json());
 app.use("/api/auth",authrouter);
-app.use("/api/admin/products",adminProductsRouter)
+app.use("/api/admin/products",adminProductsRouter);
+app.use("/api/pets" , petRouter);
 app.listen(PORT,()=>{
     console.log(`Server is now running on port ${PORT}`)
 })
