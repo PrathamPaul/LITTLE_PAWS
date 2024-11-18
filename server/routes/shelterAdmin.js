@@ -18,7 +18,7 @@ router.get('/applications' , async(req,res) => {
     res.status(500).json({ message: 'Internal Server Error' });
 }
 })
-router.put('/application/:appId', async (req, res) => {
+router.put('/applications/:appId', async (req, res) => {
     const applicationId = req.params.appId;
 
     try {
@@ -45,7 +45,7 @@ router.put('/application/:appId', async (req, res) => {
         });
     }
 });
-router.put('/application/reject/:appId', async (req, res) => {
+router.put('/applications/reject/:appId', async (req, res) => {
     const applicationId = req.params.appId;
 
     try {
