@@ -1,15 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Heart, User, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PetCard from '@/components/main-search/PetCard';
 
 const MainSearchPage = () => {
-  const pets = [
-    { name: 'Sugar', type: 'Kitten', breed: 'American Shorthair', distance: '7 miles away', image: '/api/placeholder/300/300' },
-    { name: 'Saffron', type: 'Kitten', breed: 'American Shorthair', distance: '7 miles away', image: '/api/placeholder/300/300' },
-    { name: 'Autumn', type: 'Kitten', breed: 'American Shorthair', distance: '7 miles away', image: '/api/placeholder/300/300' },
-    { name: 'Blossom', type: 'Kitten', breed: 'American Shorthair', distance: '7 miles away', image: '/api/placeholder/300/300' },
-  ];
+
+  const [pets, setPet] = useState(null); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
+
+  useEffect(() => {
+    
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://api.example.com/data'); 
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const pets = await response.json();
+        setPet(pets); 
+      } catch (error) {
+        setError(error); 
+      } finally {
+        setLoading(false); 
+      }
+    };
+
+    fetchData(); // Call the fetch function
+
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   const filters = [
     { name: 'BREED', options: ['Any'] },
@@ -102,7 +129,7 @@ const MainSearchPage = () => {
                 <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-indigo-600" />
               </div>
             </div>
-
+            <pre>{JSON.stringify(data, null, 2)}</pre>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {pets.map((pet, index) => (
               <PetCard key={index} pet={pet} />
