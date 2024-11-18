@@ -53,18 +53,22 @@ function Commonform({formControls,formData,setFormData,onSubmit,buttonText}) {
                     break;
 
                     case "textarea":
-                        <Textarea
-                        name={getControlItem.name}
-                        placeholder={getControlItem.placeholder}
-                        id={getControlItem.id}
-                        value={value}
-                 onChange={event=> setFormData({
-                    ...formData,
-                [getControlItem.name]: event.target.value,
-                 })}
-                        />
+                        element = (
+                          <Textarea
+                            name={getControlItem.name}
+                            placeholder={getControlItem.placeholder}
+                            id={getControlItem.id}
+                            value={value}
+                            onChange={(event) =>
+                              setFormData({
+                                ...formData,
+                                [getControlItem.name]: event.target.value,
+                              })
+                            }
+                          />
+                        );
+                
                         break;
-
 
             default:
                  element=(<Input

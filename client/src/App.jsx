@@ -20,10 +20,25 @@ import Landingpage from './pages/main-home-page/landing-page';
 import MainSearchPage from './pages/main-search-page/main-search-page';
 import PetPage from './pages/main-pet-page/Main-pet-page';
 import MainAdoptionForm from './pages/main-adoption-form/MainAdoptionForm';
-function App() {
-  const isAuthenticated=false;
-  const user=null;
+import { useDispatch, useSelector } from 'react-redux';
+import { checkAuth } from './store/auth-slice';
+import { useEffect } from 'react';
+import { Skeleton } from './components/ui/skeleton';
 
+function App() {
+
+  const {user,isAuthenticated,isLoading}=useSelector(state=>state.auth)
+  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+
+  if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
+
+  // console.log(isLoading, user);
+  
   return (
     <>
     <div className="flex flex-col overflow-hidden bg-white">
