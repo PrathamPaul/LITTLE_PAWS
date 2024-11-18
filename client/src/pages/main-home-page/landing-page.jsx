@@ -71,6 +71,7 @@ const Landingpage = () => {
           <div className="flex gap-6">
           <Link to="/main" className="text-white hover:text-yellow-400 transition-colors">Home</Link>
           <Link to="/search" className="text-white hover:text-yellow-400 transition-colors">Pets</Link>
+          <Link to="/ecommerce" className="text-white hover:text-yellow-400 transition-colors">Ecommerce</Link>
           <Link to="/help" className="text-white hover:text-yellow-400 transition-colors">Help</Link>
           <Link to="/about" className="text-white hover:text-yellow-400 transition-colors">About Us</Link>
           <Link to="/contact" className="text-white hover:text-yellow-400 transition-colors">Contact</Link>
