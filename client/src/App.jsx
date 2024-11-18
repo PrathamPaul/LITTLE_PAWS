@@ -16,6 +16,10 @@ import ShoppingCheckout from './pages/shopping-view/checkout';
 import ShoppingAccount from './pages/shopping-view/account';
 import CheckAuth from './components/common/check-auth';
 import UnauthPage from './pages/unauth-page';
+import Landingpage from './pages/main-home-page/landing-page';
+import MainSearchPage from './pages/main-search-page/main-search-page';
+import PetPage from './pages/main-pet-page/Main-pet-page';
+import MainAdoptionForm from './pages/main-adoption-form/MainAdoptionForm';
 function App() {
   const isAuthenticated=false;
   const user=null;
@@ -23,6 +27,13 @@ function App() {
   return (
     <>
     <div className="flex flex-col overflow-hidden bg-white">
+    <Routes>
+      <Route path='/' element={<Landingpage/>}/>
+      <Route path='/search' element={<MainSearchPage/>}/>
+      <Route path='/pet' element={<PetPage/>}/>
+      <Route path='/form' element={<MainAdoptionForm/>}/>
+    </Routes>
+    
       <Routes>
       <Route
           path="/ecommerce"
