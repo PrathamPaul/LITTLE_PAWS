@@ -5,6 +5,8 @@ const cookieparser=require('cookie-parser')
 const cors=require('cors')
 const authrouter= require('./routes/auth/auth-routes')
 const adminProductsRouter=require('./routes/admin/products-routes')
+const petRouter = require('./routes/allpets')
+const shelterAdminRouter = require('./routes/shelterAdmin')
 //require('dotenv').config();
 // create database || create a separate file also and import it than
 mongoose.connect(process.env.MONGODB_URL)
@@ -37,7 +39,11 @@ app.use(
 app.use(cookieparser());
 app.use(express.json());
 app.use("/api/auth",authrouter);
-app.use("/api/admin/products",adminProductsRouter)
+app.use("/api/admin/products",adminProductsRouter);
+app.use("/api/shelterAdmin" , shelterAdminRouter);
+app.use("/api/pets" , petRouter);
+
+
 app.listen(PORT,()=>{
     console.log(`Server is now running on port ${PORT}`)
 })
