@@ -2,6 +2,7 @@ const {Router} = require('express');
 const router = Router();
 const Pet = require('../models/pets.model');
 
+//fetch all pets
 router.get('/', async (req, res) => {
     try {
         const allPets = await Pet.find(); 
@@ -12,6 +13,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+//fetch specific
 router.get('/:petId', async (req, res) => {
     const petId = req.params.petId;
 
