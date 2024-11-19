@@ -49,7 +49,7 @@ const loginUser=async(req,res)=>{
         success:false,
         message:"User doesn't exists! Please register first"
       })
-
+      
       const checkPasswordMatch= await bcrypt.compare(password,checkUser.password);
       if(!checkPasswordMatch) return res.json({
         success:false,

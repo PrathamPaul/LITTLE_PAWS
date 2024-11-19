@@ -1,12 +1,13 @@
 const express=require('express');
 const mongoose=require('mongoose')
+require('dotenv').config();
 const cookieparser=require('cookie-parser')
 const cors=require('cors')
 const authrouter= require('./routes/auth/auth-routes')
 const adminProductsRouter=require('./routes/admin/products-routes')
 //require('dotenv').config();
 // create database || create a separate file also and import it than
-mongoose.connect('mongodb+srv://prsondhi:piyush123@cluster0.a6ms7.mongodb.net/')
+mongoose.connect(process.env.MONGODB_URL)
 .then(()=>{
     console.log("MongoDB connected")
 })
