@@ -9,12 +9,14 @@ const {
 } = require("../../controllers/admin/products-controller");
 
 const { upload } = require("../../helpers/cloudinary");
+const { verifySeller } = require("../../middlewares/auth.middleware");
 
 const router = express.Router();
 
-router.post("/upload-image", upload.single("my_file"), handleImageUpload);
-router.post("/add", addProduct);
-router.put("/edit/:id", editProduct);
-router.delete("/delete/:id", deleteProduct);
-router.get("/get", fetchAllProducts);
+router.post("/upload-image", verifySeller , upload.single("my_file"), handleImageUpload);
+router.post("/add",verifySeller , addProduct);
+router.put("/edit/:id",verifySeller , editProduct);
+router.delete("/delete/:id",verifySeller , deleteProduct);
+router.get("/",verifySeller , fetchAllProducts);
+
 module.exports = router;

@@ -1,7 +1,7 @@
 const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken');
 const User=require("../../models/User")
-
+const CLIENT_SECRET_KEY = process.env.CLIENT_SECRET_KEY;
 //register
 
 const registerUser=async(req,res)=>{
@@ -60,10 +60,11 @@ const loginUser=async(req,res)=>{
         id:checkUser._id, 
         role:checkUser.role,
         email: checkUser.email
-      },'CLIENT_SECRET_KEY',{expiresIn:'60m'})
+      },CLIENT_SECRET_KEY,{expiresIn:'60m'})
 
       res.cookie("token", token, { httpOnly: true, secure: false }).json({
         success: true,
+        token : token,
         message: "Logged in successfully",
         user: {
           email: checkUser.email,
@@ -106,7 +107,7 @@ const authMiddleware = async (req, res, next) => {
     });
 
   try {
-    const decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
+    const decoded = jwt.verify(token, CLIENT_SECRET_KEY);
     req.user = decoded;
     next();
   } catch (error) {
