@@ -45,7 +45,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Landingpage/>}/>
       <Route path='/search' element={<MainSearchPage/>}/>
-      <Route path='/pet' element={<PetPage/>}/>
+      <Route path='/pet/:petId' element={<PetPage/>}/>
       <Route path='/form' element={<MainAdoptionForm/>}/>
     </Routes>
     
