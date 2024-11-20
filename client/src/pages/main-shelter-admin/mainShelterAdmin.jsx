@@ -121,18 +121,6 @@ const MainAdminPanel = () => {
       {/* Render the ApplicationDetails component for each application */}
       <ApplicationDetails app={app} />
 
-      <div className="flex space-x-5 mt-4">
-        <button 
-          className="flex-1 py-2 rounded bg-green-100 text-green-600 hover:bg-green-200 hover:text-green-700 transform hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center"
-        >
-          <Check className="w-5 h-5" />
-        </button>
-        <button 
-          className="flex-1 py-2 rounded bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700 transform hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center"
-        >
-          <X className="w-5 h-5" />
-        </button>
-      </div>
     </div>
   ))}
 </div>
