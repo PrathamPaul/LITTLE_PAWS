@@ -1,50 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, HandHeart, Users } from 'lucide-react';
+import axios from 'axios';
 
 const Landingpage = () => {
-  const pets = [
-    {
-      id: 1,
-      name: 'Esme and Ralda',
-      image: 'https://media.4-paws.org/9/c/9/7/9c97c38666efa11b79d94619cc1db56e8c43d430/Molly_006-2829x1886-2726x1886-1920x1328.jpg', // Replace with actual image URLs
-    },
-    {
-      id: 2,
-      name: 'Layla',
-      image: 'https://placekitten.com/301/200',
-    },
-    {
-      id: 3,
-      name: 'Brown',
-      image: 'https://placekitten.com/302/200',
-    },
-    {
-      id: 4,
-      name: 'Roy',
-      image: 'https://placekitten.com/303/200',
-    },
-    {
-      id: 5,
-      name: 'Kristen',
-      image: 'https://placekitten.com/304/200',
-    },
-    {
-      id: 6,
-      name: 'Jack and Daniel',
-      image: 'https://placekitten.com/305/200',
-    },
-    {
-      id: 7,
-      name: 'Jacquile',
-      image: 'https://placekitten.com/305/200',
-    },
-    {
-      id: 8,
-      name: 'Bean',
-      image: 'https://placekitten.com/305/200',
-    },
-  ];
+  const [pets, setPet] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/pets/'); 
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const fetchedPets = await response.json();
+        const shuffledPets = fetchedPets.sort(() => 0.5 - Math.random()).slice(0, 6);
+        setPet(shuffledPets); 
+          
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchData(); 
+
+  }, []);
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+  
+  if (!pets) {
+    return <div>Loading...</div>; // Display loading message while fetching data
+  }
 
   return (
     <div className="relative h-auto bg-gray-900">
@@ -121,15 +110,15 @@ const Landingpage = () => {
           </div>
 
           {/* Pet Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-[7.5vh] mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-[7.5vh] mb-8">
             {pets.map((pet) => (
               <div
-                key={pet.id}
+                key={pet._id}
                 className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
               >
                 <div className="aspect-[3/2] overflow-hidden">
                   <img
-                    src={pet.image}
+                    src={""}
                     alt={pet.name}
                     className="w-full h-full object-cover"
                   />
