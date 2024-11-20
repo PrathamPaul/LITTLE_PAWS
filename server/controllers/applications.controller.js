@@ -1,4 +1,3 @@
-
 const Applications = require('../models/adoptionForm.model')
 
 const viewApplications =  async(req,res) => {
