@@ -7,6 +7,7 @@ const authrouter= require('./routes/auth/auth-routes')
 const adminProductsRouter=require('./routes/admin/products-routes')
 const petRouter = require('./routes/allpets')
 const shelterAdminRouter = require('./routes/shelterAdmin')
+const userRouter = require('./routes/user.routes')
 //require('dotenv').config();
 // create database || create a separate file also and import it than
 mongoose.connect(process.env.MONGODB_URL)
@@ -42,6 +43,7 @@ app.use("/api/auth",authrouter);
 app.use("/api/admin/products",adminProductsRouter);
 app.use("/api/shelterAdmin" , shelterAdminRouter);
 app.use("/api/pets" , petRouter);
+app.use("/api/user" , userRouter);
 
 
 app.listen(PORT,()=>{
