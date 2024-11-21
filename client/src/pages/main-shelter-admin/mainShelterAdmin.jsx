@@ -1,30 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Search, LogOut, Check, X } from 'lucide-react';
 import ApplicationDetails from '@/components/main-adoption-form-card/MainAdoptionFormCard';
+import axios from 'axios';
 
 const MainAdminPanel = () => {
  const [applications, setApplications] = useState(null);
    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    
+   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/shelterAdmin/applications'); 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const applicationfetched = await response.json();
-        setApplications(applicationfetched); 
-          
+        // Set the cookie manually (if needed)
+        document.cookie = "myCookieName=myCookieValue; Path=/;";
+  
+        const response = await axios.get('http://localhost:5000/api/shelterAdmin/applications', {
+          withCredentials: true, // Include cookies and credentials in the request
+        });
+  
+        setApplications(response.data);
       } catch (error) {
-        setError(error.message);
+        setError(error.response?.data?.message || error.message);
       }
     };
-
-    fetchData(); 
-
+  
+    fetchData();
   }, []);
+  
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -32,41 +33,8 @@ const MainAdminPanel = () => {
   if (!applications) {
     return <div>Loading...</div>; // Display loading message while fetching data
   }
+  
 
-//   const applications = [
-//     {
-//       id: '1234567890',
-//       pet: 'Teddy',
-//       age: '1 yr',
-//       type: 'bird - finch',
-//       location: 'chandigarh',
-//       requestedBy: 'Jasmine'
-//     },
-//     {
-//       id: '1234567890',
-//       pet: 'Teddy',
-//       age: '1 yr',
-//       type: 'bird - finch',
-//       location: 'chandigarh',
-//       requestedBy: 'Jasmine'
-//     },
-//     {
-//       id: '1234567890',
-//       pet: 'Teddy',
-//       age: '1 yr',
-//       type: 'bird - finch',
-//       location: 'chandigarh',
-//       requestedBy: 'Jasmine'
-//     },
-//     {
-//       id: '1234567890',
-//       pet: 'Teddy',
-//       age: '1 yr',
-//       type: 'bird - finch',
-//       location: 'chandigarh',
-//       requestedBy: 'Jasmine'
-//     }
-//   ];
 
   return (
     <div className="min-h-screen bg-slate-50">

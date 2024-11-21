@@ -25,6 +25,7 @@ import { checkAuth } from './store/auth-slice';
 import { useEffect } from 'react';
 import { Skeleton } from './components/ui/skeleton';
 import MainAdminPanel from './pages/main-shelter-admin/mainShelterAdmin';
+import MainReportStray from './pages/main-report-stray/mainReportStray';
 
 function App() {
 
@@ -48,6 +49,8 @@ function App() {
       <Route path='/search' element={<MainSearchPage/>}/>
       <Route path='/pet/:petId' element={<PetPage/>}/>
       <Route path='/form' element={<MainAdoptionForm/>}/>
+      <Route path='/reportStray' element={<MainReportStray/>}/>
+      
       <Route path="/shelterAdmin" element={
             <MainAdminPanel/>
         }></Route>
