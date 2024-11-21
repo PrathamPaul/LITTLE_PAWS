@@ -52,6 +52,6 @@ const verifyRole = (allowedRole) => {
 
 module.exports = {
     verifyUser: verifyRole('user'),
-    verifyShelterAdmin: verifyRole('shelteradmin'),
+    verifyShelterAdmin: verifyRole('shelterAdmin'),
     verifySeller: verifyRole('seller'),
 };
