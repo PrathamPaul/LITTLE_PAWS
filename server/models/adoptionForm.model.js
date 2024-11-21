@@ -1,15 +1,19 @@
 const mongoose = require('mongoose');
 
+// Adoption Form Schema
 const AdoptionFormSchema = new mongoose.Schema({
-  user : {
-    type : mongoose.Schema.ObjectId,
-    ref : 'User'
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+  },
+  city: {
+    type: String,
   },
   personalInfo: {
     fullName: { type: String, required: true },
-    email: { type: String, required: true,  },
-    phone: { type: String, required: true,},
-    altPhone: { type: String, required: false,},
+    email: { type: String, required: true },
+    phone: { type: String, required: true },
+    altPhone: { type: String },
     address: { type: String, required: true },
     occupation: { type: String, required: true },
     workingHours: { type: String, required: true },
@@ -20,16 +24,16 @@ const AdoptionFormSchema = new mongoose.Schema({
     hasYard: { type: Boolean, default: false },
     yardFenced: { type: Boolean, default: false },
     householdMembers: { type: String, required: true },
-    childrenAges: { type: String, required: false },
-    landlordContact: { type: String, required: function () { return this.livingConditions.ownershipStatus === 'Rent'; } },
+    childrenAges: { type: String },
+    landlordContact: { type: String, required: function () { return this.ownershipStatus === 'Rent'; } },
     moveFrequency: { type: String, required: true },
   },
   petExperience: {
-    currentPets: { type: String, required: false },
+    currentPets: { type: String },
     previousPets: { type: String, required: true },
-    vetName: { type: String, required: false },
-    vetContact: { type: String, required: false,},
-    petAllergies: { type: String, required: false },
+    vetName: { type: String },
+    vetContact: { type: String },
+    petAllergies: { type: String },
     trainingExperience: { type: String, required: true },
   },
   adoptionDetails: {
@@ -37,18 +41,20 @@ const AdoptionFormSchema = new mongoose.Schema({
     reasonToAdopt: { type: String, required: true },
     timeWithPet: { type: String, required: true },
     exercisePlan: { type: String, required: true },
-    emergencyPlan: { type: String, required: false },
-    adjustmentPlan: { type: String, required: false },
+    emergencyPlan: { type: String },
+    adjustmentPlan: { type: String },
     petExpenses: { type: String, required: true },
     vacationPlan: { type: String, required: true },
   },
   isApproved: {
     type: Boolean,
-    default: false
-},
-  submissionDate: { type: Date, default: Date.now },
-  
+    default: false,
+  },
+  submissionDate: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-
+// Export the model
 module.exports = mongoose.model('AdoptionForm', AdoptionFormSchema);
