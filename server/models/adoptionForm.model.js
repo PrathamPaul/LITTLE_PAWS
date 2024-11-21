@@ -25,7 +25,10 @@ const AdoptionFormSchema = new mongoose.Schema({
     yardFenced: { type: Boolean, default: false },
     householdMembers: { type: String, required: true },
     childrenAges: { type: String },
-    landlordContact: { type: String, required: function () { return this.ownershipStatus === 'Rent'; } },
+    landlordContact: { 
+      type: String, 
+      required: function () { return this.ownershipStatus === 'Rent'; } 
+    },
     moveFrequency: { type: String, required: true },
   },
   petExperience: {
@@ -46,9 +49,10 @@ const AdoptionFormSchema = new mongoose.Schema({
     petExpenses: { type: String, required: true },
     vacationPlan: { type: String, required: true },
   },
-  isApproved: {
-    type: Boolean,
-    default: false,
+  status: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending',
   },
   submissionDate: {
     type: Date,
