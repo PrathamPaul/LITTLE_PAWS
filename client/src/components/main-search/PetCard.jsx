@@ -11,7 +11,7 @@ const PetCard = ({ pet }) => {
       <Link to={`/pet/${pet._id}`} className="text-2xl font-bold">
         <div className="relative">
           <img
-            src={pet.image}
+            src={pet.pictures[0]}
             alt={pet.name}
             className="text-xl w-full h-48 object-cover "
           />

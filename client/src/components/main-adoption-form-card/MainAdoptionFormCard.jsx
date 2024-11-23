@@ -1,10 +1,56 @@
 import { useState } from "react";
 import { Check, X } from 'lucide-react';
+import axios from 'axios';
 
 const ApplicationDetails = ({ app }) => {
   const [showAllDetails, setShowAllDetails] = useState(false);
 
   const toggleDetails = () => setShowAllDetails(!showAllDetails);
+  const getApprovalStatus = (app) => {
+    if (app.status === 'approved') {
+        return "Approved";
+    } else if (app.status === 'rejected') {
+        return "Rejected";
+    } else {
+        return "Pending";
+    }
+};
+
+
+const handleAccept = async (applicationId) => {
+    try {
+        const response = await axios.put(
+            `http://localhost:5000/api/shelterAdmin/applications/${applicationId}`, 
+            {}, // Request body (empty for this case)
+            {
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              withCredentials: true, // Include cookies in the request
+          }
+        );
+
+        console.log("Application approved:", response.data);
+        alert("Application approved successfully!");
+        // Optionally update your state or UI here
+    } catch (error) {
+        if (error.response) {
+            // The request was made and the server responded with an error status
+            console.error("Error approving application:", error.response.data.message);
+            alert(`Error: ${error.response.data.message}`);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.error("No response received:", error.request);
+            alert("No response from server. Please try again later.");
+        } else {
+            // Something happened in setting up the request
+            console.error("Error setting up request:", error.message);
+            alert("An error occurred. Please try again.");
+        }
+    }
+};
+
+
 
   return (
     <div className="mb-4 rounded shadow-sm">
@@ -12,7 +58,7 @@ const ApplicationDetails = ({ app }) => {
       <p className="text-gray-600">Pet Name: {app.adoptionDetails.petName}</p>
       <p className="text-gray-600">Requested by: {app.personalInfo.fullName}</p>
       <p className="text-gray-600">Location: {app.location}</p>
-      <p className="text-gray-600">Status: {app.isApproved ? "Approved" : "Pending"}</p>
+      <p className="text-gray-600">Status: {getApprovalStatus(app)}</p>
 
       {!showAllDetails && (
         <button
@@ -81,8 +127,12 @@ const ApplicationDetails = ({ app }) => {
       <div className="flex space-x-5 mt-4">
             <button 
             className="flex-1 py-2 rounded bg-green-100 text-green-600 hover:bg-green-200 hover:text-green-700 transform hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center"
+            onClick={() => handleAccept(app._id)}
             >
-            <Check className="w-5 h-5" />
+            <Check 
+              className="w-5 h-5"
+              
+            />
             </button>
             <button 
             className="flex-1 py-2 rounded bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700 transform hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center"
