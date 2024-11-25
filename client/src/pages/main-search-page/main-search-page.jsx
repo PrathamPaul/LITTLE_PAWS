@@ -326,7 +326,7 @@ const MainSearchPage = () => {
             <div className="flex justify-end mb-6">
               
             </div>
-            <pre>{JSON.stringify(filteredPets, null, 2)}</pre>
+            {/* <pre>{JSON.stringify(filteredPets, null, 2)}</pre> */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredPets.length > 0 ? (
                 filteredPets.map((pet, index) => (

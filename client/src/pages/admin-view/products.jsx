@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { addProductFormElements } from "@/config";
 import { useToast } from "@/hooks/use-toast";
-import { addNewProduct, fetchAllProducts } from "@/store/admin/products-slice";
+import { addNewProduct, deleteProduct, editProduct, fetchAllProducts } from "@/store/admin/products-slice";
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AdminProductTile from "./product-tile";
@@ -34,10 +34,28 @@ function AdminProducts() {
 
     const dispatch=useDispatch()
     const { toast } = useToast();
+
+
     function onSubmit(event){
         event.preventDefault();
 
-        dispatch(addNewProduct({
+        currentEditedId !== null
+      ? dispatch(
+        editProduct({
+            id: currentEditedId,
+            formData,
+          })
+        ).then((data) => {
+          console.log(data, "edit");
+
+          if (data?.payload?.success) {
+            dispatch(fetchAllProducts());
+            setFormData(initialFormData);
+            setOpenCreateProductsDialog(false);
+            setCurrentEditedId(null);
+          }
+        })
+        :dispatch(addNewProduct({
             ...formData,
             image: uploadedImageUrl,
         })).then((data)=>{
@@ -59,6 +77,22 @@ function AdminProducts() {
         dispatch(fetchAllProducts())
     },[dispatch])
 
+
+    function handleDelete(getCurrentProductId) {
+        dispatch(deleteProduct(getCurrentProductId)).then((data) => {
+          if (data?.payload?.success) {
+            dispatch(fetchAllProducts());
+          }
+        });
+    }
+
+
+    function isFormValid() {
+        return Object.keys(formData)
+          //.filter((currentKey) => currentKey !== "averageReview")
+          .map((key) => formData[key] !== "")
+          .every((item) => item);
+    }
     console.log(productList,"productList");
 
     return ( 
@@ -69,12 +103,12 @@ function AdminProducts() {
             <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
             {productList && productList.length > 0
           ? productList.map((productItem) => (
-              <AdminProductTile
+              <AdminProductTile 
                 setFormData={setFormData}
                 setOpenCreateProductsDialog={setOpenCreateProductsDialog}
                 setCurrentEditedId={setCurrentEditedId}
                 product={productItem}
-                //handleDelete={handleDelete}
+                handleDelete={handleDelete}
               />
             ))
           : null}
@@ -82,17 +116,19 @@ function AdminProducts() {
                 <Sheet open={openCreateProductsDialog}
                 onOpenChange={()=>{
                     setOpenCreateProductsDialog(false);
+                    setCurrentEditedId(null);
+                    setFormData(initialFormData);
                 }}
                 >
                     <SheetContent side="right" className="overflow-auto">
                         <SheetHeader>
                             <SheetTitle>
-                                Add new Product
+                            {currentEditedId !== null ? "Edit Product" : "Add New Product"}
                             </SheetTitle>
                         </SheetHeader>
-                        <ProductImageUpload imageFile={imageFile} setImageFile={setImageFile} uploadedImageUrl={uploadedImageUrl} setUploadedImageUrl={setUploadedImageUrl} setImageLoadingState={setImageLoadingState} currentEditedId={currentEditedId} />
+                        <ProductImageUpload imageFile={imageFile} setImageFile={setImageFile} uploadedImageUrl={uploadedImageUrl} setUploadedImageUrl={setUploadedImageUrl} setImageLoadingState={setImageLoadingState} isEditMode={currentEditedId !== null}/>
                         <div className="py-6">
-                            <Commonform  onSubmit={onSubmit} formData={formData} setFormData={setFormData} imageLoadingState={imageLoadingState}  buttonText="Add" 
+                            <Commonform  onSubmit={onSubmit} formData={formData} setFormData={setFormData} imageLoadingState={imageLoadingState}  buttonText={currentEditedId !== null ? "Edit" : "Add"} isBtnDisabled={!isFormValid()}
                             formControls={addProductFormElements}/>
                         </div>
                     </SheetContent> 

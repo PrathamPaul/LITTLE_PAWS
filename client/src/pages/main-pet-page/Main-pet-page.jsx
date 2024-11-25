@@ -217,7 +217,7 @@ const PetPage = () => {
 
         <div className="flex items-center justify-center w-full">
           <button className="bg-indigo-900 text-white px-8 py-3 rounded-full hover:bg-indigo-500 font-semibold transition-colors">
-            <Link to="/form" className="text-xl font-semibold">ADOPT ME !!</Link>
+            <Link to={`/form/${petId}`} className="text-xl font-semibold">ADOPT ME !!</Link>
           </button>
         </div>
         {/* <pre>{JSON.stringify(pets, null, 2)}</pre> */}

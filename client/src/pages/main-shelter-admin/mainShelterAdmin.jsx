@@ -81,17 +81,30 @@ const MainAdminPanel = () => {
         <h3 className="text-lg font-medium mb-4">Applications :</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-  {applications.map((app, index) => (
-    <div 
-      key={index} 
-      className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-4"
-    >
-      {/* Render the ApplicationDetails component for each application */}
-      <ApplicationDetails app={app} />
+          {/* {applications.map((app, index) => (
+            <div 
+              key={index} 
+              className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-4"
+            >
+              
+              <ApplicationDetails app={app} />
 
-    </div>
-  ))}
-</div>
+            </div>
+          ))} */}
+          {applications.applications && applications.applications.length > 0 ? (
+            applications.applications.map((app, index) => (
+              <div 
+                key={index} 
+                className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-4"
+              >
+                <ApplicationDetails app={app} />
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-500">No applications available.</p>
+          )}
+
+        </div>
         {/* <pre>{JSON.stringify(applications, null, 2)}</pre> */}
       </div>
     </div>

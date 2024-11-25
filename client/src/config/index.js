@@ -103,3 +103,71 @@ export const addProductFormElements = [
     },
   ];
   
+
+
+  export const shoppingViewHeaderMenuItems = [
+    {
+      id: "home",
+      label: "Home",
+      path: "/shop/home",
+    },
+    // {
+    //   id: "products",
+    //   label: "Products",
+    //   path: "/shop/listing",
+    // },
+    {
+      id: "cats",
+      label: "Cats",
+      path: "/shop/listing",
+    },
+    {
+      id: "birds",
+      label: "Birds",
+      path: "/shop/listing",
+    },
+    {
+      id: "dogs",
+      label: "Dogs",
+      path: "/shop/listing",
+    },
+    {
+      id: "fish",
+      label: "Fishes",
+      path: "/shop/listing",
+    },
+    {
+      id: "hamster",
+      label: "Hamster",
+      path: "/shop/listing",
+    },
+    // {
+    //   id: "search",
+    //   label: "Search",
+    //   path: "/shop/search",
+    // },
+  ];
+
+  export const filterOptions = {
+    category: [
+      { id: "dog", label: "Dog" },
+      { id: "cat", label: "Cat" },
+      { id: "bird", label: "Birds" },
+      { id: "hamster", label: "Hamster" },
+      { id: "fish", label: "Fishes" },
+    ],
+    brand: [
+      { id: "royal-canin", label: "Royal Canin" },
+      { id: "purina", label: "Purina" },
+      { id: "hill's", label: "Hill's" },
+      { id: "blue-buffalo", label: "Blue Buffalo" },
+      { id: "orijen", label: "Orijen" },
+    ],
+  };
+  
+export const sortOptions = [
+    { id: "price-lowtohigh", label: "Price: Low to High" },
+    { id: "price-hightolow", label: "Price: High to Low" },
+    { id: "title-atoz", label: "Title: A to Z" },
+    { id: "title-ztoa", label: "Title: Z to A" },
+  ];
