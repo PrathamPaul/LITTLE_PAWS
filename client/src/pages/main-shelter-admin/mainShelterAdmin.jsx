@@ -105,7 +105,7 @@ const MainAdminPanel = () => {
           )}
 
         </div>
-        <pre>{JSON.stringify(applications, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(applications, null, 2)}</pre> */}
       </div>
     </div>
   );

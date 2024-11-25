@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState ,useEffect } from "react";
 import { Check, X } from 'lucide-react';
 import axios from 'axios';
 
@@ -6,15 +6,28 @@ const ApplicationDetails = ({ app }) => {
   const [showAllDetails, setShowAllDetails] = useState(false);
 
   const toggleDetails = () => setShowAllDetails(!showAllDetails);
-  const getApprovalStatus = (app) => {
-    if (app.status === 'approved') {
-        return "Approved";
-    } else if (app.status === 'rejected') {
-        return "Rejected";
-    } else {
-        return "Pending";
-    }
-};
+//   const getApprovalStatus = (app) => {
+//     if (app.status === 'approved') {
+//         return "Approved";
+//     } else if (app.status === 'rejected') {
+//         return "Rejected";
+//     } else {
+//         return "Pending";
+//     }
+// };
+
+const [status, setStatus] = useState(app.status);
+
+    // Update status when `app.isApproved` changes
+    useEffect(() => {
+        if (app.status === 'approved') {
+            setStatus("Approved");
+        } else if (app.status === 'rejected') {
+            setStatus("Rejected");
+        } else {
+            setStatus("Pending");
+        }
+    }, [app.status]);
 
 
 const handleAccept = async (applicationId) => {
@@ -49,6 +62,36 @@ const handleAccept = async (applicationId) => {
         }
     }
 };
+const handleReject = async (applicationId) => {
+  try {
+      const response = await axios.put(
+          `http://localhost:5000/api/shelterAdmin/applications/reject/${applicationId}`, 
+          {}, // Request body (empty for this case)
+          {
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              withCredentials: true, // Include cookies in the request
+          }
+      );
+
+      console.log("Application rejected:", response.data);
+      alert("Application rejected successfully!");
+      // Optionally update your state or UI here
+  } catch (error) {
+      if (error.response) {
+          console.error("Error rejecting application:", error.response.data.message);
+          alert(`Error: ${error.response.data.message}`);
+      } else if (error.request) {
+          console.error("No response received:", error.request);
+          alert("No response from server. Please try again later.");
+      } else {
+          console.error("Error setting up request:", error.message);
+          alert("An error occurred. Please try again.");
+      }
+  }
+};
+
 
 
 
@@ -58,7 +101,7 @@ const handleAccept = async (applicationId) => {
       <p className="text-gray-600">Pet Name: {app.adoptionDetails.petName}</p>
       <p className="text-gray-600">Requested by: {app.personalInfo.fullName}</p>
       <p className="text-gray-600">Location: {app.location}</p>
-      <p className="text-gray-600">Status: {getApprovalStatus(app)}</p>
+      <p className="text-gray-600">Status: {status}</p>
 
       {!showAllDetails && (
         <button
@@ -136,6 +179,7 @@ const handleAccept = async (applicationId) => {
             </button>
             <button 
             className="flex-1 py-2 rounded bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700 transform hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center"
+            onClick={() => handleReject(app._id)}
             >
             <X className="w-5 h-5" />
             </button>

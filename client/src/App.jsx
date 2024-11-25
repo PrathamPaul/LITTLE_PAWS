@@ -48,7 +48,7 @@ function App() {
       <Route path='/' element={<Landingpage/>}/>
       <Route path='/search' element={<MainSearchPage/>}/>
       <Route path='/pet/:petId' element={<PetPage/>}/>
-      <Route path='/form' element={<MainAdoptionForm/>}/>
+      <Route path='/form/:petId' element={<MainAdoptionForm/>}/>
       <Route path='/reportStray' element={<MainReportStray/>}/>
       
       <Route path="/shelterAdmin" element={
