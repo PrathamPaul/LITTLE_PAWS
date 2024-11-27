@@ -68,7 +68,7 @@ function App() {
     
       <Routes>
       <Route
-          path="/ecommerce"
+          path="/shop"
           element={
             <CheckAuth
               isAuthenticated={isAuthenticated}

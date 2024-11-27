@@ -64,7 +64,7 @@ const Landingpage = () => {
           <div className="flex gap-6">
           <Link to="/" className="text-white hover:text-indigo-400 transition-colors">Home</Link>
           <Link to="/search" className="text-white hover:text-indigo-400 transition-colors">Pets</Link>
-          <Link to="/ecommerce" className="text-white hover:text-indigo-400 transition-colors">Ecommerce</Link>
+          <Link to="/shop/home" className="text-white hover:text-indigo-400 transition-colors">Ecommerce</Link>
           <Link to="/reportStray" className="text-white hover:text-indigo-400 transition-colors">Report Stray</Link>
           <Link to="/about" className="text-white hover:text-indigo-400 transition-colors">About Us</Link>
           {/* <Link to="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Login</Link> */}
