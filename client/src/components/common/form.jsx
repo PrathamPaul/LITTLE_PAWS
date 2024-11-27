@@ -3,7 +3,7 @@ import { Label } from "../ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-function Commonform({formControls,formData,setFormData,onSubmit,buttonText}) {
+function Commonform({formControls,formData,setFormData,onSubmit,buttonText,isBtnDisabled}) {
 
     function renderInputsByComponentType(getControlItem){
         let element=null;
@@ -100,7 +100,7 @@ function Commonform({formControls,formData,setFormData,onSubmit,buttonText}) {
                     </div>))
                 }
             </div>
-            <Button type="submit" className='mt-2 w-full'>{buttonText || 'Submit'}</Button>
+            <Button disabled={isBtnDisabled} type="submit" className='mt-2 w-full'>{buttonText || 'Submit'}</Button>
         </form>
     );
 }

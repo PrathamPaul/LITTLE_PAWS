@@ -17,6 +17,6 @@ router.post("/upload-image", verifySeller , upload.single("my_file"), handleImag
 router.post("/add",verifySeller , addProduct);
 router.put("/edit/:id",verifySeller , editProduct);
 router.delete("/delete/:id",verifySeller , deleteProduct);
-router.get("/",verifySeller , fetchAllProducts);
+router.get("/get",verifySeller , fetchAllProducts);
 
 module.exports = router;

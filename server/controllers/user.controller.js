@@ -1,6 +1,7 @@
 const Pet = require('../models/pets.model');
 const Shelter = require('../models/shelter.model')
 const {imageUploadUtil} = require('../helpers/cloudinary')
+const AdoptionForm = require('../models/adoptionForm.model')
 
 
 const reportStray =  async (req, res) => {
@@ -61,4 +62,89 @@ const reportStray =  async (req, res) => {
     }
   }
 
-module.exports = {reportStray}  
+const getApplicationStatus = async (req, res) => {
+  try {
+    const { id: userId } = req.user; 
+
+    
+    const adoptionForms = await AdoptionForm.find({ user: userId });
+
+    if (adoptionForms.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No adoption applications found for this user.",
+      });
+    }
+
+    
+    res.status(200).json({
+      success: true,
+      message: "Adoption applications retrieved successfully.",
+      applications: adoptionForms,
+    });
+  } catch (error) {
+    console.error("Error fetching adoption applications:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching adoption applications.",
+      error: error.message,
+    });
+  }
+}
+
+const sendForm = async (req, res) => {
+  try {
+    const { petId } = req.params;
+    const { id: userId } = req.user; 
+   
+    
+    const { 
+      city, 
+      personalInfo, 
+      livingConditions, 
+      petExperience, 
+      adoptionDetails 
+    } = req.body;
+
+   
+    const pet = await Pet.findById(petId);
+    if (!pet) {
+      return res.status(404).json({ success: false, message: "Pet not found" });
+    }
+
+
+    console.log(userId , petId);
+    
+    const existingForm = await AdoptionForm.findOne({ user: userId, pet: petId });
+    console.log(existingForm);
+    if (existingForm) {
+      return res.status(400).json({ success: false, message: "You have already submitted an adoption form for this pet." });
+    }
+
+    
+    const adoptionForm = new AdoptionForm({
+      user: userId,
+      pet: petId,
+      city,
+      personalInfo,
+      livingConditions,
+      petExperience,
+      adoptionDetails,
+    });
+
+    
+    const savedForm = await adoptionForm.save();
+
+    
+    res.status(201).json({
+      success: true,
+      message: "Adoption form submitted successfully.",
+      adoptionForm: savedForm,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Error submitting adoption form.", error: error.message });
+  }
+}
+
+module.exports = {reportStray , getApplicationStatus , sendForm}  
