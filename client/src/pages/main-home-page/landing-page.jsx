@@ -39,6 +39,20 @@ const Landingpage = () => {
     return <div>Loading...</div>; // Display loading message while fetching data
   }
 
+const handleLogout = async () => {
+  try {
+    const { data } = await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
+
+    alert(data.message); // "Logged out successfully!"
+    // Redirect user to login page or clear user state
+    window.location.href = "/login";
+  } catch (error) {
+    console.error("Error logging out:", error);
+    alert(error.response?.data?.message || "An error occurred. Please try again.");
+  }
+};
+
+
   return (
     <div className="relative h-auto bg-gray-900">
       {/* Background Image */}
@@ -70,7 +84,7 @@ const Landingpage = () => {
           {/* <Link to="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Login</Link> */}
           {isAuthenticated ? (
                 <>
-                <User className="text-white w-6 h-6 hover:text-indigo-200 cursor-pointer" />
+                <a href="/auth/login"><div onClick={handleLogout} className="text-white w-6 h-6 hover:text-indigo-200 cursor-pointer" >Logout</div></a>
                 </>
             ) : (<div>
                 <a href="/auth/login" className="mr-4 text-white hover:text-indigo-400 transition-colors">Login</a>
