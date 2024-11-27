@@ -96,7 +96,7 @@ const sendForm = async (req, res) => {
   try {
     const { petId } = req.params;
     const { id: userId } = req.user; 
-
+   
     
     const { 
       city, 
@@ -113,9 +113,9 @@ const sendForm = async (req, res) => {
     }
 
 
-    console.log(userId);
+    console.log(userId , petId);
     
-    const existingForm = await AdoptionForm.findOne({ user: userId });
+    const existingForm = await AdoptionForm.findOne({ user: userId, pet: petId });
     if (existingForm) {
       return res.status(400).json({ success: false, message: "You have already submitted an adoption form for this pet." });
     }

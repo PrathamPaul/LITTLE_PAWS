@@ -8,7 +8,13 @@ const AdoptionFormSchema = new mongoose.Schema({
   },
   city: {
     type: String,
+  }
+  ,
+  pet: { 
+    type: mongoose.Schema.ObjectId,
+    ref: 'Pet',
   },
+
   personalInfo: {
     fullName: { type: String, required: true },
     email: { type: String, required: true },
