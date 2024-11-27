@@ -92,6 +92,9 @@ import React, { useEffect, useState } from 'react';
 import { Heart, User, ChevronDown } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import PetCard from '@/components/main-search/PetCard';
+
 
 const PetPage = () => {
   
@@ -117,7 +120,7 @@ const PetPage = () => {
   const [error, setError] = useState(null);
   const [count, setCount] = useState(3);
   const [isInitialFetch, setIsInitialFetch] = useState(true); 
-
+  const {user,isAuthenticated,isLoading}=useSelector(state=>state.auth);
   const handleIncrement = () => {
     setCount((prevCount) => prevCount + 3);
   };
@@ -171,10 +174,24 @@ const PetPage = () => {
       <nav className="bg-indigo-900 text-white p-4 shadow-lg">
         <div className="container mx-auto flex justify-between items-center">
           <Link to="/" className="text-2xl font-bold">🐾 LilPaws</Link>
-          <div className="flex items-center gap-6">
-            <Link to="/search" className="hover:text-gray-200 font-semibold">Continue Search</Link>
-            <Heart className="w-6 h-6 hover:text-indigo-200 cursor-pointer" />
-            <User className="w-6 h-6 hover:text-indigo-200 cursor-pointer" />
+          <div className="flex gap-6">
+          <Link to="/" className="text-white hover:text-indigo-400 transition-colors">Home</Link>
+          <Link to="/search" className="text-white hover:text-indigo-400 transition-colors">Pets</Link>
+          <Link to="/ecommerce" className="text-white hover:text-indigo-400 transition-colors">Ecommerce</Link>
+          <Link to="/reportStray" className="text-white hover:text-indigo-400 transition-colors">Report Stray</Link>
+          <Link to="/about" className="text-white hover:text-indigo-400 transition-colors">About Us</Link>
+          {/* <Link to="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Login</Link> */}
+          {isAuthenticated ? (
+                <>  
+                  <User className="w-6 h-6 hover:text-indigo-200 cursor-pointer" />
+                    {/* <button className="text-white hover:text-indigo-400 transition-colors ">Logout</button> */}
+                </>
+            ) : (<div>
+                <a href="/auth/login" className="mr-4 text-white hover:text-indigo-400 transition-colors">Login</a>
+                <a href="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Register</a>
+                </div>
+            )}
+          
           </div>
         </div>
       </nav>
@@ -182,11 +199,15 @@ const PetPage = () => {
 
     
       <div className="max-w-7xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-20">
+        <div className="flex justify-center">
         <img 
           src={petInfo.pictures[0]} // Updated to use the first image in the pictures array
           alt="Pet for adoption"
-          className="w-full h-64 object-cover rounded-lg mb-4"
+          className="w-auto h-[50vh] object-cover rounded-lg mb-4"
         />
+
+        </div>
+        
         
         <h1 className="text-2xl font-bold mb-1">
           {petInfo.name} <span className="text-indigo-400">({petInfo.region})</span>
@@ -227,15 +248,16 @@ const PetPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {Array.isArray(pets) && pets.length > 0 ? (
             pets.map((pet, index) => (
-              <div key={index} className="p-4 border rounded-lg">
-                <img 
-                  src= {pet.pictures?.[0] ||'/api/placeholder/200/150'}
-                  alt={`${pet.name}`}
-                  className="w-full h-32 object-cover rounded mb-2"
-                />
-                <h3 className="font-medium">{pet.name} ({pet.region})</h3>
-                <p className="text-sm text-gray-600">{pet.type}</p>
-              </div>
+              // <div key={index} className="p-4 border rounded-lg">
+              //   <img 
+              //     src= {pet.pictures?.[0] ||'/api/placeholder/200/150'}
+              //     alt={`${pet.name}`}
+              //     className="w-full h-32 object-cover rounded mb-2"
+              //   />
+              //   <h3 className="font-medium">{pet.name} ({pet.region})</h3>
+              //   <p className="text-sm text-gray-600">{pet.type}</p>
+              // </div>
+              <PetCard key={index} pet={pet} />
             ))
           ) : (
             <p>No related pets found.</p>

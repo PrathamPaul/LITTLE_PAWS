@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Heart, User, ChevronDown, FishOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PetCard from '@/components/main-search/PetCard';
-
+import { useDispatch, useSelector } from 'react-redux';
 
 const MainSearchPage = () => {
 
@@ -14,6 +14,8 @@ const MainSearchPage = () => {
   const [filteredPets, setFilteredPets] = useState([]);
   const [animal, setAnimal] = useState("All"); 
   const [age, setAge] = useState("Any"); 
+  const [sort, setSort] = useState("Any"); 
+  const {user,isAuthenticated,isLoading}=useSelector(state=>state.auth)
   
   const handleAgeChange = (e) => {
     setAge(e.target.value);
@@ -21,7 +23,7 @@ const MainSearchPage = () => {
   
 
   const handleBreedChange = (e) => {
-    
+
     setBreed(e.target.value);
   };
 
@@ -34,6 +36,11 @@ const MainSearchPage = () => {
     setAnimal(selectedAnimal);
     setBreed("Any"); // Reset breed whenever the animal changes
   };
+
+  const handleSortChange = (e) => {
+    //console.log(e.target.value);
+    setSort(e.target.value);
+};
   
 
   useEffect(() => {
@@ -69,11 +76,21 @@ const MainSearchPage = () => {
         else if(age === "16 - 20"){
           filtered = filtered.filter((pet) => pet.age >= 16 && pet.age <= 20);
         }
-        
+        // if(sort==="Any"){
+        //   console.log(sort);
+        //   filtered= pets.sort(() => 0.5 - Math.random());
+        // }
+        // else if (sort === "A - Z") {
+        //   console.log(sort);
+        //   filtered = pets.sort((a, b) => a.name.localeCompare(b.name));
+        // } else if (sort === "Z - A") {
+        //   console.log(sort);
+        //   filtered = pets.sort((a, b) => b.name.localeCompare(a.name));
+        // }
 
         setFilteredPets(filtered); // Update filteredPets
     }
-}, [pets, breed, city,age,animal]);
+}, [pets, breed, city,age,animal,sort]);
 
 
 
@@ -135,12 +152,33 @@ const MainSearchPage = () => {
         <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-2xl font-bold">🐾 LilPaws</Link>
           <div className="flex items-center gap-6">
-            <button className="hover:text-gray-200 font-semibold">ALL ABOUT PETS</button>
-            <Heart className="w-6 h-6 hover:text-indigo-200 cursor-pointer" />
-            <User className="w-6 h-6 hover:text-indigo-200 cursor-pointer" />
+            {/* <button className="hover:text-gray-200 font-semibold">ALL ABOUT PETS</button>
+            <Heart className="w-6 h-6 hover:text-indigo-200 cursor-pointer" /> */}
+            
+          </div>
+          {/* <Link to="/" className="text-white text-2xl font-bold">🐾 LilPaws</Link> */}
+          <div className="flex gap-6">
+          <Link to="/" className="text-white hover:text-indigo-400 transition-colors">Home</Link>
+          <Link to="/search" className="text-white hover:text-indigo-400 transition-colors">Pets</Link>
+          <Link to="/ecommerce" className="text-white hover:text-indigo-400 transition-colors">Ecommerce</Link>
+          <Link to="/reportStray" className="text-white hover:text-indigo-400 transition-colors">Report Stray</Link>
+          <Link to="/about" className="text-white hover:text-indigo-400 transition-colors">About Us</Link>
+          {/* <Link to="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Login</Link> */}
+          {isAuthenticated ? (
+                <>  
+                  <User className="w-6 h-6 hover:text-indigo-200 cursor-pointer" />
+                    {/* <button className="text-white hover:text-indigo-400 transition-colors ">Logout</button> */}
+                </>
+            ) : (<div>
+                <a href="/auth/login" className="mr-4 text-white hover:text-indigo-400 transition-colors">Login</a>
+                <a href="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Register</a>
+                </div>
+            )}
+          
           </div>
         </div>
       </nav>
+      
 
       {/* Search Bar */}
       <div className="bg-indigo-800 text-white p-6 shadow-md">
@@ -167,9 +205,9 @@ const MainSearchPage = () => {
               ))}
             </select>
           
-          <button className="ml-auto bg-white text-indigo-900 px-6 py-2 rounded-full hover:bg-indigo-100 font-semibold transition-colors">
+          {/* <button className="ml-auto bg-white text-indigo-900 px-6 py-2 rounded-full hover:bg-indigo-100 font-semibold transition-colors">
             SAVE SEARCH
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -261,33 +299,32 @@ const MainSearchPage = () => {
             <option>1 - 4</option>
             <option>4 - 8</option>
             <option>8 - 12</option>
-            <option>12 - 16</option>
-            <option>16 - 20</option>
+            {/* <option>12 - 16</option> */}
             
           </select>
           <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-indigo-600" />
         </div>
       </div>
 
-      {/* Size Filter */}
-      <div className="mb-6">
-        <h3 className="text-sm font-bold text-indigo-900 mb-2">SIZE</h3>
+      {/* Sort Filter */}
+      {/* <div className="mb-6">
+        <h3 className="text-sm font-bold text-indigo-900 mb-2">SORT</h3>
         <div className="relative">
           <select
             className="w-full p-3 border border-indigo-200 rounded appearance-none bg-white hover:border-indigo-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-colors"
+            onChange={handleSortChange}
+            value={sort}
           >
             <option>Any</option>
-            <option>Small</option>
-            <option>Medium</option>
-            <option>Large</option>
-            {/* Add more size options as needed */}
+            <option>A - Z</option>
+            <option>Z - A</option>
           </select>
           <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-indigo-600" />
         </div>
-      </div>
+      </div> */}
 
-      {/* Gender Filter */}
-      <div className="mb-6">
+      
+      {/* <div className="mb-6">
         <h3 className="text-sm font-bold text-indigo-900 mb-2">GENDER</h3>
         <div className="relative">
           <select
@@ -299,10 +336,9 @@ const MainSearchPage = () => {
           </select>
           <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-indigo-600" />
         </div>
-      </div>
+      </div> */}
 
-      {/* Good With Filter */}
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <h3 className="text-sm font-bold text-indigo-900 mb-2">GOOD WITH</h3>
         <div className="relative">
           <select
@@ -312,11 +348,10 @@ const MainSearchPage = () => {
             <option>Dogs</option>
             <option>Cats</option>
             <option>Children</option>
-            {/* Add more options as needed */}
           </select>
           <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-indigo-600" />
         </div>
-      </div>
+      </div> */}
     </div>
 
 
@@ -340,7 +375,6 @@ const MainSearchPage = () => {
                   <p className="text-2xl font-bold text-gray-700">No Pets Found</p>
                   <p className="mt-2 text-lg">Try adjusting your filters to explore more options!</p>
                 </div>
-
               )}
             </div>
           </div>
