@@ -26,6 +26,7 @@ import { useEffect } from 'react';
 import { Skeleton } from './components/ui/skeleton';
 import MainAdminPanel from './pages/main-shelter-admin/mainShelterAdmin';
 import MainReportStray from './pages/main-report-stray/mainReportStray';
+import AboutUs from './pages/main-about-us/MainAboutUs';
 
 function App() {
 
@@ -48,8 +49,17 @@ function App() {
       <Route path='/' element={<Landingpage/>}/>
       <Route path='/search' element={<MainSearchPage/>}/>
       <Route path='/pet/:petId' element={<PetPage/>}/>
-      <Route path='/form/:petId' element={<MainAdoptionForm/>}/>
-      <Route path='/reportStray' element={<MainReportStray/>}/>
+      <Route path='/aboutUs' element ={<AboutUs/>}/>
+      <Route path='/form/:petId' element={
+        <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <MainAdoptionForm/>
+          </CheckAuth>}/>
+  
+        
+      <Route path='/reportStray' element={
+        <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <MainReportStray/>
+          </CheckAuth>}/>
       
       <Route path="/shelterAdmin" element={
             <MainAdminPanel/>
