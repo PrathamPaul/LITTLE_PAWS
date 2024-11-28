@@ -95,12 +95,19 @@ function App() {
         </Route>
 
         <Route path='/shop' element={
-          <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+          // <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+          // <ShoppingLayout/> 
+          // </CheckAuth>
           <ShoppingLayout/> 
-          </CheckAuth>
         }>
-        <Route path='home' element={<ShoppingHome/>}/>
-        <Route path='listing' element={<ShoppingListing/>}/>
+        <Route path='home' element={
+          <ShoppingHome/>
+        }/>
+        <Route path='listing' element={
+          <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+          <ShoppingListing/>
+          </CheckAuth>
+          }/>
         <Route path='checkout' element={<ShoppingCheckout/>}/>
         <Route path='account' element={<ShoppingAccount/>}/>
         </Route>

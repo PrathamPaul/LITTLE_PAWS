@@ -45,7 +45,7 @@ const handleLogout = async () => {
 
     alert(data.message); // "Logged out successfully!"
     // Redirect user to login page or clear user state
-    window.location.href = "/login";
+    window.location.href = "/";
   } catch (error) {
     console.error("Error logging out:", error);
     alert(error.response?.data?.message || "An error occurred. Please try again.");
@@ -80,11 +80,11 @@ const handleLogout = async () => {
           <Link to="/search" className="text-white hover:text-indigo-400 transition-colors">Pets</Link>
           <Link to="/shop/home" className="text-white hover:text-indigo-400 transition-colors">Ecommerce</Link>
           <Link to="/reportStray" className="text-white hover:text-indigo-400 transition-colors">Report Stray</Link>
-          <Link to="/about" className="text-white hover:text-indigo-400 transition-colors">About Us</Link>
+          <Link to="/aboutUs" className="text-white hover:text-indigo-400 transition-colors">About Us</Link>
           {/* <Link to="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Login</Link> */}
           {isAuthenticated ? (
                 <>
-                <a href="/auth/login"><div onClick={handleLogout} className="text-white w-6 h-6 hover:text-indigo-200 cursor-pointer" >Logout</div></a>
+                <div onClick={handleLogout} className="text-white w-6 h-6 hover:text-indigo-200 cursor-pointer" >Logout</div>
                 </>
             ) : (<div>
                 <a href="/auth/login" className="mr-4 text-white hover:text-indigo-400 transition-colors">Login</a>
