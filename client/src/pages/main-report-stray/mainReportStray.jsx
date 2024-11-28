@@ -292,6 +292,7 @@ import axios from "axios";
 import { Heart, User, ChevronDown,Check, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import MainNavbar from "@/components/main-navbar/MainNavbar";
 
 const MainReportStray = () => {
   const [formData, setFormData] = useState({
@@ -370,46 +371,7 @@ const MainReportStray = () => {
 
   return (
     <div>
-      {/* <nav className="bg-indigo-900 text-white p-4 shadow-lg">
-         <div className="container mx-auto flex justify-between items-center">
-         <Link to="/" className="text-2xl font-bold">🐾 LilPaws</Link>
-           <div className="flex items-center gap-6">
-           <Link to="/search" className="hover:text-gray-200 font-semibold">Continue Search</Link>
-             <Heart className="w-6 h-6 hover:text-indigo-200 cursor-pointer" />
-             <User className="w-6 h-6 hover:text-indigo-200 cursor-pointer" />
-           </div>
-         </div>
-       </nav> */}
-       <nav className="bg-indigo-900 text-white p-4 shadow-lg">
-        <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold">🐾 LilPaws</Link>
-          <div className="flex items-center gap-6">
-            {/* <button className="hover:text-gray-200 font-semibold">ALL ABOUT PETS</button>
-            <Heart className="w-6 h-6 hover:text-indigo-200 cursor-pointer" /> */}
-            
-          </div>
-          {/* <Link to="/" className="text-white text-2xl font-bold">🐾 LilPaws</Link> */}
-          <div className="flex gap-6">
-          <Link to="/" className="text-white hover:text-indigo-400 transition-colors">Home</Link>
-          <Link to="/search" className="text-white hover:text-indigo-400 transition-colors">Pets</Link>
-          <Link to="/ecommerce" className="text-white hover:text-indigo-400 transition-colors">Ecommerce</Link>
-          <Link to="/reportStray" className="text-white hover:text-indigo-400 transition-colors">Report Stray</Link>
-          <Link to="/about" className="text-white hover:text-indigo-400 transition-colors">About Us</Link>
-          {/* <Link to="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Login</Link> */}
-          {isAuthenticated ? (
-                <>  
-                  <User className="w-6 h-6 hover:text-indigo-200 cursor-pointer" />
-                    {/* <button className="text-white hover:text-indigo-400 transition-colors ">Logout</button> */}
-                </>
-            ) : (<div>
-                <a href="/auth/login" className="mr-4 text-white hover:text-indigo-400 transition-colors">Login</a>
-                <a href="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Register</a>
-                </div>
-            )}
-          
-          </div>
-        </div>
-      </nav>
+      <MainNavbar/>
        
       <form onSubmit={handleSubmit} className="mt-20 max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
         <h1 className="text-2xl font-bold mb-6">Report a Stray Animal</h1>

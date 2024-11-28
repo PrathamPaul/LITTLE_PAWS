@@ -85,35 +85,48 @@ const handleLogout = async () => {
           <Link to="/aboutUs" className="text-white hover:text-indigo-400 transition-colors">About Us</Link>
           {/* <Link to="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Login</Link> */}
           {isAuthenticated ? (
-                <>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Avatar className="bg-black mt-[-9px] ml-[9px]">
-                      <AvatarFallback className="bg-black text-white font-extrabold">
-                        {user?.userName[0].toUpperCase()} 
-                      </AvatarFallback>
-                    </Avatar>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" className="w-56">
-                    <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => navigate("/shop/account")}>
-                      <UserCog className="mr-2 h-4 w-4" />
-                      <Link to="/applicationStatus" >Application Status</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogout}>
-                      <LogOut className="mr-2 h-4 w-4" />
-                      Logout
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                </>
-            ) : (<div>
-                <a href="/auth/login" className="mr-4 text-white hover:text-indigo-400 transition-colors">Login</a>
-                <a href="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Register</a>
-                </div>
-            )}
+  <>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Avatar className="bg-indigo-900 mt-[-9px] ml-[9px]">
+          <AvatarFallback className="bg-indigo-900 text-white font-extrabold">
+            {user?.userName[0].toUpperCase()} 
+          </AvatarFallback>
+        </Avatar>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent side="right" className="w-56">
+        <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {user?.role === "shelterAdmin" ? (
+          <DropdownMenuItem onClick={() => navigate("/admin/panel")}>
+            <UserCog className="mr-2 h-4 w-4" />
+            <Link to="/shelterAdmin">Admin Panel</Link>
+          </DropdownMenuItem>
+        ) : (
+          <DropdownMenuItem onClick={() => navigate("/applicationStatus")}>
+            <UserCog className="mr-2 h-4 w-4" />
+            <Link to="/applicationStatus">Application Status</Link>
+          </DropdownMenuItem>
+        )}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={handleLogout}>
+          <LogOut className="mr-2 h-4 w-4" />
+          Logout
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  </>
+) : (
+  <div>
+    <a href="/auth/login" className="mr-4 text-white hover:text-indigo-400 transition-colors">
+      Login
+    </a>
+    <a href="/auth/register" className="text-white hover:text-indigo-400 transition-colors">
+      Register
+    </a>
+  </div>
+)}
+
           
           </div>
           

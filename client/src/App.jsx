@@ -41,8 +41,6 @@ function App() {
 
   if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
 
-  // console.log(isLoading, user);
-  
   return (
     <>
     <div className="flex flex-col overflow-hidden bg-white">
@@ -101,9 +99,6 @@ function App() {
         </Route>
 
         <Route path='/shop' element={
-          // <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-          // <ShoppingLayout/> 
-          // </CheckAuth>
           <ShoppingLayout/> 
         }>
         <Route path='home' element={
@@ -118,7 +113,7 @@ function App() {
         <Route path='account' element={<ShoppingAccount/>}/>
         </Route>
         <Route path="/unauth-page" element={<UnauthPage/>}/>
-        <Route path="*" element={<NotFound/>}/>
+        {/* <Route path="*" element={<NotFound/>}/> */}
       </Routes>
     </div>
     </>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, LogOut, Check, X } from 'lucide-react';
 import ApplicationDetails from '@/components/main-adoption-form-card/MainAdoptionFormCard';
 import axios from 'axios';
+import MainNavbar from '@/components/main-navbar/MainNavbar';
 
 const MainAdminPanel = () => {
  const [applications, setApplications] = useState(null);
@@ -49,8 +50,9 @@ const MainAdminPanel = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      <MainNavbar/>
       {/* Header */}
-      <header className="bg-white border-b">
+      {/* <header className="bg-white border-b">
         <div className="container mx-auto px-4 py-2 flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <span className="text-lg font-semibold text-indigo-600">Admin Panel</span>
@@ -68,7 +70,7 @@ const MainAdminPanel = () => {
             </button>
           </div>
         </div>
-      </header>
+      </header> */}
 
       {/* Sidebar */}
       {/* <div className="fixed left-0 top-0 bottom-0 w-64 bg-white border-r pt-16">
@@ -87,7 +89,7 @@ const MainAdminPanel = () => {
         </div>
       </div> */}
       
-      <div className="ml-64 p-6">
+      <div className="max-w-7xl mx-auto p-6">
         <div className="mb-6">
           <h2 className="text-xl font-semibold">Admin Dashboard</h2>
         </div>

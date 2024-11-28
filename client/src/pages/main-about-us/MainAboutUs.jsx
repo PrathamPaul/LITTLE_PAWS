@@ -9,6 +9,7 @@ import {
   Award, 
   Share2 
 } from 'lucide-react';
+import MainNavbar from '@/components/main-navbar/MainNavbar';
 
 
 
@@ -47,7 +48,7 @@ const AboutUs = () => {
 
   return (
     <div className="relative min-h-screen bg-gray-50">
-      {/* Hero Section */}
+      <MainNavbar/>
       <div className="relative h-[70vh] overflow-hidden">
         <div 
           className="absolute inset-0 z-0"
@@ -64,12 +65,12 @@ const AboutUs = () => {
         <div className="relative z-20 container mx-auto px-6 flex items-center justify-center h-full text-center">
           <div className="text-white max-w-3xl">
             <h1 className="text-5xl font-bold mb-6 flex items-center justify-center gap-4">
-              PawConnect <Heart className="text-red-500" size={56} />
+              LilPaws
             </h1>
             <p className="text-xl mb-8 max-w-2xl mx-auto">
               Connecting hearts, saving lives. We believe every animal deserves a loving home and a second chance.
             </p>
-            <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105">
+            <button className="bg-indigo-700 hover:bg-indigo-900 text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105">
               Adopt a Friend
             </button>
           </div>
@@ -148,7 +149,7 @@ const AboutUs = () => {
                   onClick={() => setActiveSection(section)}
                   className={`px-6 py-3 rounded-full transition ${
                     activeSection === section 
-                      ? 'bg-red-500 text-white' 
+                      ? 'bg-indigo-700 text-white' 
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   }`}
                 >
@@ -193,13 +194,13 @@ const AboutUs = () => {
         </section>
       </div>
 
-      <div className="bg-red-500 text-white py-16 text-center">
+      <div className="bg-indigo-700 text-white py-16 text-center">
         <h2 className="text-4xl font-bold mb-6">Make a Difference Today</h2>
         <p className="text-xl mb-8 max-w-2xl mx-auto">
           Whether you adopt, volunteer, or donate, your support creates lasting change in an animal's life.
         </p>
         <div className="space-x-4">
-          <button className="bg-white text-red-500 hover:bg-gray-100 font-bold py-3 px-8 rounded-full">
+          <button className="bg-white text-indigo-800 hover:bg-gray-100 font-bold py-3 px-8 rounded-full">
             Adopt Now
           </button>
           <button className="border-2 border-white hover:bg-white hover:text-red-500 font-bold py-3 px-8 rounded-full">
