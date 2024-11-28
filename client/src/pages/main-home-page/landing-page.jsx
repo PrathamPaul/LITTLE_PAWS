@@ -11,7 +11,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 const Landingpage = () => {
   const [pets, setPet] = useState(null);
   const [error, setError] = useState(null);
-  const {user,isAuthenticated,isLoading}=useSelector(state=>state.auth)
+  const {user,isAuthenticated,isLoading}=useSelector(state=>state.auth);
 
   useEffect(() => {
     
