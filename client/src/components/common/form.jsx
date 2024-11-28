@@ -103,6 +103,7 @@ function Commonform({formControls,formData,setFormData,onSubmit,buttonText,isBtn
             <Button disabled={isBtnDisabled} type="submit" className='mt-2 w-full'>{buttonText || 'Submit'}</Button>
         </form>
     );
+    
 }
 
 export default Commonform;

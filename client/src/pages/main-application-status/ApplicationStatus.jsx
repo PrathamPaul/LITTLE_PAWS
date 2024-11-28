@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AlertCircle, CheckCircle, Clock } from 'lucide-react';
 import axios from "axios";
+import MainNavbar from '@/components/main-navbar/MainNavbar';
 
 const ApplicationStatus = () => {
   const [adoptionStatus, setAdoptionStatus] = useState(null);
@@ -15,7 +16,7 @@ const ApplicationStatus = () => {
             withCredentials: true, // Ensures cookies are sent with the request
           });
         // setAdoptionStatus(response?.data?.applications[0]?.status);
-        setAdoptionStatus(response?.data?.applications[0]?.status);
+        setAdoptionStatus(response?.data?.applications?.[response.data.applications.length - 1]?.status);
         //console.log(response);
         setIsLoading(false);
       } catch (err) {
@@ -89,6 +90,8 @@ const ApplicationStatus = () => {
   const config = statusConfigs[adoptionStatus] || statusConfigs.pending;
 
   return (
+    <div>
+      <MainNavbar/>
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 p-4">
       <div className={`
         w-full max-w-lg mx-auto 
@@ -148,6 +151,7 @@ const ApplicationStatus = () => {
           </div> */}
         </div>
       </div>
+    </div>
     </div>
   );
 };

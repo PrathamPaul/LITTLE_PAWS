@@ -22,8 +22,12 @@ function CheckAuth({isAuthenticated,user, children}) {
     if(isAuthenticated && user?.role==="seller" && location.pathname.includes('shop')){
         return <Navigate to="/admin/products"/>;
     }
-    if(isAuthenticated && user?.role==="shelterAdmin"){
-        return <Navigate to="/shelterAdmin"/>;
+    if(isAuthenticated && user?.role==="shelterAdmin"&& location.pathname.includes('reportStray')){
+        return <Navigate to="/unauth-page"/>;
+    }
+    
+    if(isAuthenticated && user?.role==="shelterAdmin"&& location.pathname.includes('form')){
+        return <Navigate to="/unauth-page"/>;
     }
     // if(!isAuthenticated){
     //     return <Navigate to="/"/>;

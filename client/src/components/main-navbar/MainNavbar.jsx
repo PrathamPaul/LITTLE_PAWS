@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import axios from 'axios';
+
 
 const MainNavbar = () => {
 
@@ -43,12 +45,10 @@ const MainNavbar = () => {
           <Link to="/aboutUs" className="text-white hover:text-indigo-400 transition-colors">About Us</Link>
           {/* <Link to="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Login</Link> */}
           {isAuthenticated ? (
-                <>  
-                  {isAuthenticated ? (
-                <>
+              <>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Avatar className="bg-white mt-[-8px] ml-[9px]">
+                    <Avatar className="bg-white mt-[-9px] ml-[9px]">
                       <AvatarFallback className="bg-white text-indigo-800 font-extrabold">
                         {user?.userName[0].toUpperCase()} 
                       </AvatarFallback>
@@ -57,10 +57,18 @@ const MainNavbar = () => {
                   <DropdownMenuContent side="right" className="w-56">
                     <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => navigate("/shop/account")}>
-                      <UserCog className="mr-2 h-4 w-4" />
-                      <Link to="/applicationStatus" >Application Status</Link>
-                    </DropdownMenuItem>
+                    {/* Conditional rendering based on the user's role */}
+                    {user?.role === "shelterAdmin" ? (
+                      <DropdownMenuItem onClick={() => navigate("/shelterAdmin")}>
+                        <UserCog className="mr-2 h-4 w-4" />
+                        <Link to="/shelterAdmin">Admin Panel</Link>
+                      </DropdownMenuItem>
+                    ) : (
+                      <DropdownMenuItem onClick={() => navigate("/applicationStatus")}>
+                        <UserCog className="mr-2 h-4 w-4" />
+                        <Link to="/applicationStatus">Application Status</Link>
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout}>
                       <LogOut className="mr-2 h-4 w-4" />
@@ -68,17 +76,16 @@ const MainNavbar = () => {
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                </>
-            ) : (<div>
-                <a href="/auth/login" className="mr-4 text-white hover:text-indigo-400 transition-colors">Login</a>
-                <a href="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Register</a>
-                </div>
-            )}
-                </>
-            ) : (<div>
-                <a href="/auth/login" className="mr-4 text-white hover:text-indigo-400 transition-colors">Login</a>
-                <a href="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Register</a>
-                </div>
+              </>
+            ) : (
+              <div>
+                <a href="/auth/login" className="mr-4 text-white hover:text-indigo-400 transition-colors">
+                  Login
+                </a>
+                <a href="/auth/register" className="text-white hover:text-indigo-400 transition-colors">
+                  Register
+                </a>
+              </div>
             )}
           
           </div>
