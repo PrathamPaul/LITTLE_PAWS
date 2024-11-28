@@ -8,6 +8,9 @@ import { shoppingViewHeaderMenuItems } from "@/config";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { logoutUser } from "@/store/auth-slice";
+import { useEffect, useState } from "react";
+import UserCartWrapper from "./cart-wrapper";
+import { fetchCartItems } from "@/store/shop/cart-slice";
 
 
 
@@ -55,8 +58,8 @@ function MenuItems() {
 function HeaderRightContent() {
     const { user } = useSelector((state) => state.auth);
     console.log(user,"useruseruser")
-    // const { cartItems } = useSelector((state) => state.shopCart);
-    // const [openCartSheet, setOpenCartSheet] = useState(false);
+    const { cartItems } = useSelector((state) => state.shopCart);
+    const [openCartSheet, setOpenCartSheet] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
   
@@ -64,17 +67,17 @@ function HeaderRightContent() {
       dispatch(logoutUser());
     }
   
-    // useEffect(() => {
-    //   dispatch(fetchCartItems(user?.id));
-    // }, [dispatch]);
+    useEffect(() => {
+      dispatch(fetchCartItems(user?.id));
+    }, [dispatch]);
   
     // console.log(cartItems, "sangam");
   
     return (
       <div className="flex lg:items-center lg:flex-row flex-col gap-4">
-        <Sheet>
+        <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
           <Button
-            // onClick={() => setOpenCartSheet(true)}
+            onClick={() => setOpenCartSheet(true)}
             variant="outline"
             size="icon"
             className="relative"
@@ -85,14 +88,15 @@ function HeaderRightContent() {
             </span> */}
             <span className="sr-only">User cart</span>
           </Button>
-          {/* <UserCartWrapper
-            setOpenCartSheet={setOpenCartSheet}
+          <UserCartWrapper
+              
+            // setOpenCartSheet={setOpenCartSheet}
             cartItems={
               cartItems && cartItems.items && cartItems.items.length > 0
                 ? cartItems.items
                 : []
             }
-          /> */}
+          />
         </Sheet>
   
         <DropdownMenu>
@@ -128,10 +132,7 @@ function ShoppingHeader() {
     return ( 
         <header className="sticky top-0 z-40 w-full border-b bg-background">
             <div className="flex h-16 items-center justify-between px-4 md:px-6">
-            <Link to="/shop/home" className="flex items-center gap-2">
-          <HousePlug className="h-6 w-6" />
-          <span className="font-bold">Ecommerce</span>
-        </Link>
+            <Link to="/" className="text-black text-2xl font-bold">🐾 LilPaws</Link>
 
         <Sheet>
           <SheetTrigger asChild>

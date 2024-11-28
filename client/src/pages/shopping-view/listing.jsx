@@ -4,12 +4,13 @@ import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
+import { useToast } from "@/hooks/use-toast";
+import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/products-slice";
 import { ArrowUpDownIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-
 
 function createSearchParamsHelper(filterParams) {
     const queryParams = [];
@@ -29,7 +30,10 @@ function createSearchParamsHelper(filterParams) {
    
 function ShoppingListing() {
     const dispatch = useDispatch();
+    const {toast}= useToast();
     const {productList,productDetails}=useSelector(state=>state.shopProducts)
+    const { cartItems } = useSelector((state) => state.shopCart);
+    const { user } = useSelector((state) => state.auth);
     const [sort, setSort] = useState(null);
     const [filters, setFilters] = useState({});
     const [searchParams,setSearchParams]= useSearchParams()
@@ -41,7 +45,6 @@ function ShoppingListing() {
 
     function handleSort(value) {
         setSort(value);
-        console.log(value)
     }
 
     
@@ -72,6 +75,18 @@ function ShoppingListing() {
     dispatch(fetchProductDetails(getCurrentProductId));
   }
 
+  function handleAddtoCart(getCurrentProductId){
+    console.log(getCurrentProductId)
+    dispatch(addToCart({userId: user?.id, productId:getCurrentProductId, quantity:1}))
+    .then((data)=>{
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems(user?.id));
+        toast({
+          title: "Product is added to cart",
+        });
+      }
+    })
+  }
 
   useEffect(() => {
     setSort("price-lowtohigh");
@@ -98,7 +113,6 @@ function ShoppingListing() {
 
 
 
-    console.log(filters)
     return ( 
         <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
             <ProductFilter filters={filters} handleFilter={handleFilter}/>
@@ -142,7 +156,7 @@ function ShoppingListing() {
                 <ShoppingProductTile
                   handleGetProductDetails={handleGetProductDetails}
                   product={productItem}
-                  //handleAddtoCart={handleAddtoCart}
+                  handleAddtoCart={handleAddtoCart}
                 />
               ))
             : null}
