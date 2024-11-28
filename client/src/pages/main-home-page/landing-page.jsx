@@ -86,7 +86,28 @@ const handleLogout = async () => {
           {/* <Link to="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Login</Link> */}
           {isAuthenticated ? (
                 <>
-                <a href="/auth/login"><div onClick={handleLogout} className="text-white w-6 h-6 hover:text-indigo-200 cursor-pointer" >Logout</div></a>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Avatar className="bg-black mt-[-9px] ml-[9px]">
+                      <AvatarFallback className="bg-black text-white font-extrabold">
+                        {user?.userName[0].toUpperCase()} 
+                      </AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" className="w-56">
+                    <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => navigate("/shop/account")}>
+                      <UserCog className="mr-2 h-4 w-4" />
+                      <Link to="/applicationStatus" >Application Status</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogout}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 </>
             ) : (<div>
                 <a href="/auth/login" className="mr-4 text-white hover:text-indigo-400 transition-colors">Login</a>
