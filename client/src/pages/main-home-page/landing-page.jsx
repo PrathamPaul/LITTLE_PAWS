@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, HandHeart, Users ,User } from 'lucide-react';
+import { Heart, HandHeart, Users ,User, UserCog, LogOut } from 'lucide-react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
 import PetCard from '@/components/main-search/PetCard';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 const Landingpage = () => {
   const [pets, setPet] = useState(null);
@@ -45,7 +47,7 @@ const handleLogout = async () => {
 
     alert(data.message); // "Logged out successfully!"
     // Redirect user to login page or clear user state
-    window.location.href = "/login";
+    window.location.href = "/";
   } catch (error) {
     console.error("Error logging out:", error);
     alert(error.response?.data?.message || "An error occurred. Please try again.");
@@ -84,7 +86,28 @@ const handleLogout = async () => {
           {/* <Link to="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Login</Link> */}
           {isAuthenticated ? (
                 <>
-                <a href="/auth/login"><div onClick={handleLogout} className="text-white w-6 h-6 hover:text-indigo-200 cursor-pointer" >Logout</div></a>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Avatar className="bg-black mt-[-9px] ml-[9px]">
+                      <AvatarFallback className="bg-black text-white font-extrabold">
+                        {user?.userName[0].toUpperCase()} 
+                      </AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" className="w-56">
+                    <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => navigate("/shop/account")}>
+                      <UserCog className="mr-2 h-4 w-4" />
+                      <Link to="/applicationStatus" >Application Status</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogout}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 </>
             ) : (<div>
                 <a href="/auth/login" className="mr-4 text-white hover:text-indigo-400 transition-colors">Login</a>
@@ -93,6 +116,7 @@ const handleLogout = async () => {
             )}
           
           </div>
+          
         </nav>
 
         {/* Hero Content */}

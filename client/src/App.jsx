@@ -27,6 +27,7 @@ import { Skeleton } from './components/ui/skeleton';
 import MainAdminPanel from './pages/main-shelter-admin/mainShelterAdmin';
 import MainReportStray from './pages/main-report-stray/mainReportStray';
 import AboutUs from './pages/main-about-us/MainAboutUs';
+import ApplicationStatus from './pages/main-application-status/ApplicationStatus';
 
 function App() {
 
@@ -54,6 +55,11 @@ function App() {
         <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <MainAdoptionForm/>
           </CheckAuth>}/>
+      <Route path='/applicationStatus' element={
+        <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <ApplicationStatus/>
+          </CheckAuth>}/>
+      
   
         
       <Route path='/reportStray' element={
