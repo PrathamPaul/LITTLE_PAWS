@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, HandHeart, Users ,User } from 'lucide-react';
+import { Heart, HandHeart, Users ,User, UserCog, LogOut } from 'lucide-react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
 import PetCard from '@/components/main-search/PetCard';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 const Landingpage = () => {
   const [pets, setPet] = useState(null);
@@ -84,7 +86,7 @@ const handleLogout = async () => {
           {/* <Link to="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Login</Link> */}
           {isAuthenticated ? (
                 <>
-                <div onClick={handleLogout} className="text-white w-6 h-6 hover:text-indigo-200 cursor-pointer" >Logout</div>
+                <a href="/auth/login"><div onClick={handleLogout} className="text-white w-6 h-6 hover:text-indigo-200 cursor-pointer" >Logout</div></a>
                 </>
             ) : (<div>
                 <a href="/auth/login" className="mr-4 text-white hover:text-indigo-400 transition-colors">Login</a>
@@ -93,6 +95,7 @@ const handleLogout = async () => {
             )}
           
           </div>
+          
         </nav>
 
         {/* Hero Content */}
