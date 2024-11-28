@@ -305,7 +305,6 @@ const MainReportStray = () => {
   const [images, setImages] = useState([]);
   const [errors, setErrors] = useState({});
   const {user,isAuthenticated,isLoading}=useSelector(state=>state.auth);
-
   // Update formData state
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({

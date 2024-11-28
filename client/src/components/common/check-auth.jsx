@@ -9,7 +9,7 @@ function CheckAuth({isAuthenticated,user, children}) {
     }
     if(isAuthenticated && (location.pathname.includes('/login')|| location.pathname.includes('/register'))){
         if(user?.role==="seller"){
-            return <Navigate to='/admin/dashboard'/>
+            return <Navigate to='/admin/products'/>
         }
         else{
             return <Navigate to='/'/>
@@ -20,7 +20,7 @@ function CheckAuth({isAuthenticated,user, children}) {
         return <Navigate to="/unauth-page"/>
     }
     if(isAuthenticated && user?.role==="seller" && location.pathname.includes('shop')){
-        return <Navigate to="/admin/dashboard"/>;
+        return <Navigate to="/admin/products"/>;
     }
     if(isAuthenticated && user?.role==="shelterAdmin"){
         return <Navigate to="/shelterAdmin"/>;
