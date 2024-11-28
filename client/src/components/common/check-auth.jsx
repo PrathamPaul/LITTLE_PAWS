@@ -22,6 +22,13 @@ function CheckAuth({isAuthenticated,user, children}) {
     if(isAuthenticated && user?.role==="seller" && location.pathname.includes('shop')){
         return <Navigate to="/admin/dashboard"/>;
     }
+    if(isAuthenticated && user?.role==="shelterAdmin"){
+        return <Navigate to="/shelterAdmin"/>;
+    }
+    // if(!isAuthenticated){
+    //     return <Navigate to="/"/>;
+    // }
+    
 
     return <>{children}</>
 }

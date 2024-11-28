@@ -94,6 +94,7 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import PetCard from '@/components/main-search/PetCard';
+import MainNavbar from '@/components/main-navbar/MainNavbar';
 
 
 const PetPage = () => {
@@ -171,7 +172,7 @@ const PetPage = () => {
   
   return (
     <div>
-      <nav className="bg-indigo-900 text-white p-4 shadow-lg">
+      {/* <nav className="bg-indigo-900 text-white p-4 shadow-lg">
         <div className="container mx-auto flex justify-between items-center">
           <Link to="/" className="text-2xl font-bold">🐾 LilPaws</Link>
           <div className="flex gap-6">
@@ -180,11 +181,9 @@ const PetPage = () => {
           <Link to="/ecommerce" className="text-white hover:text-indigo-400 transition-colors">Ecommerce</Link>
           <Link to="/reportStray" className="text-white hover:text-indigo-400 transition-colors">Report Stray</Link>
           <Link to="/about" className="text-white hover:text-indigo-400 transition-colors">About Us</Link>
-          {/* <Link to="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Login</Link> */}
           {isAuthenticated ? (
                 <>  
                   <User className="w-6 h-6 hover:text-indigo-200 cursor-pointer" />
-                    {/* <button className="text-white hover:text-indigo-400 transition-colors ">Logout</button> */}
                 </>
             ) : (<div>
                 <a href="/auth/login" className="mr-4 text-white hover:text-indigo-400 transition-colors">Login</a>
@@ -194,8 +193,8 @@ const PetPage = () => {
           
           </div>
         </div>
-      </nav>
-      {/* <pre>{JSON.stringify(petInfo, null, 2)}</pre> */}
+      </nav> */}
+      <MainNavbar/>
 
     
       <div className="max-w-7xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-20">

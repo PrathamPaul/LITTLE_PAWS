@@ -16,13 +16,13 @@ function AuthLayout() {
     // </div>
     <div className="flex flex-col min-h-screen w-full">
     {/* Navbar */}
-    <nav className="flex items-center justify-between bg-black p-4 text-white">
+    <nav className="flex items-center justify-between bg-indigo-900 p-4 text-white">
       <div className="flex items-center">
         <Link 
           to="/"
-          className="text-2xl font-bold tracking-tight hover:text-gray-300 transition-colors duration-300"
+          className="text-2xl font-bold tracking-tight hover:text-indigo-300 transition-colors duration-300"
         >
-          ECommerce Shopping
+          🐾 LilPaws
         </Link>
       </div>
       <div className="hidden lg:flex space-x-4">
