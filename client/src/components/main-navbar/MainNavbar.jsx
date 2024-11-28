@@ -11,7 +11,7 @@ const MainNavbar = () => {
 
  
   const {user,isAuthenticated,isLoading}=useSelector(state=>state.auth)
-  
+  const linkPath = user?.role === 'seller' ? "/admin/products" : "/shop/home";
   const handleLogout = async () => {
     try {
       const { data } = await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
@@ -40,7 +40,10 @@ const MainNavbar = () => {
           <div className="flex gap-6">
           <Link to="/" className="text-white hover:text-indigo-400 transition-colors">Home</Link>
           <Link to="/search" className="text-white hover:text-indigo-400 transition-colors">Pets</Link>
-          <Link to="/shop/home" className="text-white hover:text-indigo-400 transition-colors">Ecommerce</Link>
+
+          <Link to={linkPath} className="text-white hover:text-indigo-400 transition-colors">
+          Ecommerce
+          </Link>
           <Link to="/reportStray" className="text-white hover:text-indigo-400 transition-colors">Report Stray</Link>
           <Link to="/aboutUs" className="text-white hover:text-indigo-400 transition-colors">About Us</Link>
           {/* <Link to="/auth/login" className="text-white hover:text-indigo-400 transition-colors">Login</Link> */}
