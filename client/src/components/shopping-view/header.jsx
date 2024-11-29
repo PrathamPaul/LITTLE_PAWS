@@ -72,6 +72,7 @@ function HeaderRightContent() {
     }, [dispatch]);
   
     // console.log(cartItems, "sangam");
+    const {isAuthenticated,isLoading}=useSelector(state=>state.auth);
   
     return (
       <div className="flex lg:items-center lg:flex-row flex-col gap-4">
@@ -98,8 +99,9 @@ function HeaderRightContent() {
             }
           />
         </Sheet>
-  
-        <DropdownMenu>
+        {isAuthenticated ? (
+  <>
+    <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="bg-black">
               <AvatarFallback className="bg-black text-white font-extrabold">
@@ -121,6 +123,19 @@ function HeaderRightContent() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+  </>
+) : (
+  <div>
+    <a href="/auth/login" className="mr-4 text-black hover:text-indigo-400 transition-colors">
+      Login
+    </a>
+    <a href="/auth/register" className="text-black hover:text-indigo-400 transition-colors">
+      Register
+    </a>
+  </div>
+)}
+  
+        
       </div>
     );
 }

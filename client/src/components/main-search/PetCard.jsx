@@ -15,7 +15,7 @@ const PetCard = ({ pet }) => {
             alt={pet.name}
             className="text-xl w-full h-48 object-cover "
           />
-          <Heart className="absolute top-3 right-3 w-6 h-6 text-white hover:text-indigo-200 cursor-pointer" />
+          {/* <Heart className="absolute top-3 right-3 w-6 h-6 text-white hover:text-indigo-200 cursor-pointer" /> */}
         </div>
         <div className="p-4">
           <h2 className="text-xl font-semibold text-indigo-900">{pet.name}</h2>
