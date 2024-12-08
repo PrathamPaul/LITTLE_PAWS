@@ -106,7 +106,7 @@ const PetPage = () => {
     // Fetch pet data using the petId from the URL
     const fetchPetData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/pets/${petId}`); // Assuming your backend is set up with the appropriate route
+        const response = await axios.get(`https://little-paws-api.vercel.app/api/pets/${petId}`); // Assuming your backend is set up with the appropriate route
         setPetInfo(response.data); // Set pet data into state
       } catch (error) {
         console.error('Error fetching pet data:', error);
@@ -130,7 +130,7 @@ const PetPage = () => {
     
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/pets/'); 
+        const response = await fetch('https://little-paws-api.vercel.app/api/pets/'); 
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
