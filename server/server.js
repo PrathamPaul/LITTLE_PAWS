@@ -26,7 +26,7 @@ const PORT=process.env.PORT||5000;
 
 app.use(
     cors({
-        origin: 'https://little-paws-1kh9.vercel.app/',
+        origin: 'https://little-paws-1kh9.vercel.app',
         methods:['GET','POST','DELETE','PUT'],
         allowedHeaders:[
             "Content-Type",
