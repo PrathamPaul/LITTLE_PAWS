@@ -3,8 +3,9 @@ import Commonform from "../common/form";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { addressFormControls } from "@/config";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewAddress, deleteAddress, fetchAllAddresses } from "@/store/shop/address-slice";
+import { addNewAddress, deleteAddress, editaAddress, fetchAllAddresses } from "@/store/shop/address-slice";
 import AddressCard from "./address-card";
+import { useToast } from "@/hooks/use-toast";
 
 
 
@@ -26,12 +27,40 @@ function address() {
     const dispatch= useDispatch();
     const { user } = useSelector((state) => state.auth);
     const { addressList } = useSelector((state) => state.shopAddress);
-
+    const {toast}= useToast()
     function handleManageAddress(event){
         event.preventDefault();
 
 
-        dispatch(
+
+        if (addressList.length >= 3 && currentEditedId === null) {
+            setFormData(initialAddressFormData);
+            toast({
+              title: "You can add max 3 addresses",
+              variant: "destructive",
+            });
+      
+            return;
+          }
+
+        currentEditedId !== null
+      ? dispatch(
+          editaAddress({
+            userId: user?.id,
+            addressId: currentEditedId,
+            formData,
+          })
+        ).then((data) => {
+          if (data?.payload?.success) {
+            dispatch(fetchAllAddresses(user?.id));
+            setCurrentEditedId(null);
+            setFormData(initialAddressFormData);
+            toast({
+              title: "Address updated successfully",
+            });
+          }
+        })
+      : dispatch(
             addNewAddress({
               ...formData,
               userId: user?.id,
@@ -40,9 +69,9 @@ function address() {
             if (data?.payload?.success) {
               dispatch(fetchAllAddresses(user?.id));
               setFormData(initialAddressFormData);
-            //   toast({
-            //     title: "Address added successfully",
-            //   });
+              toast({
+                title: "Address added successfully",
+              });
             }
           });
     }
@@ -54,12 +83,29 @@ function address() {
         ).then((data) => {
           if (data?.payload?.success) {
             dispatch(fetchAllAddresses(user?.id));
-            // toast({
-            //   title: "Address deleted successfully",
-            // });
+            toast({
+              title: "Address deleted successfully",
+            });
           }
         });
       }
+
+
+
+
+      function handleEditAddress(getCuurentAddress) {
+        setCurrentEditedId(getCuurentAddress?._id);
+        setFormData({
+          ...formData,
+          address: getCuurentAddress?.address,
+          city: getCuurentAddress?.city,
+          phone: getCuurentAddress?.phone,
+          pincode: getCuurentAddress?.pincode,
+          notes: getCuurentAddress?.notes,
+        });
+      }
+
+
 
     function isFormValid() {
         return Object.keys(formData)
@@ -84,14 +130,14 @@ function address() {
                 handleDeleteAddress={handleDeleteAddress}
                 addressInfo={singleAddressItem}
                 handleEditAddress={handleEditAddress}
-                setCurrentSelectedAddress={setCurrentSelectedAddress}
+                //setCurrentSelectedAddress={setCurrentSelectedAddress}
               />
             ))
           : null}
             </div>
         <CardHeader>
             <CardTitle>
-                Add New Address
+            {currentEditedId !== null ? "Edit Address" : "Add New Address"}
             </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
@@ -99,7 +145,7 @@ function address() {
              formControls={addressFormControls}
              formData={formData}
              setFormData={setFormData}
-             buttonText={"Add"}
+             buttonText={currentEditedId !== null ? "Edit" : "Add"}
              onSubmit={handleManageAddress}
              isBtnDisabled={!isFormValid()}
             />

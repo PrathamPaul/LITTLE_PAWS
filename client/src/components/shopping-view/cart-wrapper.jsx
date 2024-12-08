@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import UserCartItemsContent from "./cart-items-content";
@@ -7,7 +7,7 @@ import UserCartItemsContent from "./cart-items-content";
 
 
 function UserCartWrapper({cartItems}) {
-
+  const navigate=useNavigate();
     const totalCartAmount =
     cartItems && cartItems.length > 0
       ? cartItems.reduce(
@@ -40,7 +40,7 @@ function UserCartWrapper({cartItems}) {
             </div>
             <Button
         onClick={() => {
-          //navigate("/shop/checkout");
+          navigate("/shop/checkout");
           setOpenCartSheet(false);
         }}
         className="w-full mt-6"
