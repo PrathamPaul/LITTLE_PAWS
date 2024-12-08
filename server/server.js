@@ -12,6 +12,7 @@ const shopProductsRouter=require('./routes/shop/prdoucts-routes')
 const shopcartRouter=require("./routes/shop/cart-routes")
 //require('dotenv').config();
 // create database || create a separate file also and import it than
+console.log(process.env.MONGODB_URL);
 mongoose.connect(process.env.MONGODB_URL)
 .then(()=>{
     console.log("MongoDB connected")
