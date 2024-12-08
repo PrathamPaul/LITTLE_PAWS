@@ -2,7 +2,7 @@ const Pet = require('../models/pets.model');
 const Shelter = require('../models/shelter.model')
 const {imageUploadUtil} = require('../helpers/cloudinary')
 const AdoptionForm = require('../models/adoptionForm.model')
-
+const sendAdoptionApplication = require('../helpers/kafkaProducer')
 
 const reportStray =  async (req, res) => {
     try {
@@ -92,12 +92,65 @@ const getApplicationStatus = async (req, res) => {
   }
 }
 
+// const sendForm = async (req, res) => {
+//   try {
+//     const { petId } = req.params;
+//     const { id: userId } = req.user; 
+   
+    
+//     const { 
+//       city, 
+//       personalInfo, 
+//       livingConditions, 
+//       petExperience, 
+//       adoptionDetails 
+//     } = req.body;
+
+   
+//     const pet = await Pet.findById(petId);
+//     if (!pet) {
+//       return res.status(404).json({ success: false, message: "Pet not found" });
+//     }
+
+
+//     console.log(userId , petId);
+    
+//     const existingForm = await AdoptionForm.findOne({ user: userId, pet: petId });
+//     console.log(existingForm);
+//     if (existingForm) {
+//       return res.status(400).json({ success: false, message: "You have already submitted an adoption form for this pet." });
+//     }
+
+    
+//     const adoptionForm = new AdoptionForm({
+//       user: userId,
+//       pet: petId,
+//       city,
+//       personalInfo,
+//       livingConditions,
+//       petExperience,
+//       adoptionDetails,
+//     });
+
+    
+//     const savedForm = await adoptionForm.save();
+
+    
+//     res.status(201).json({
+//       success: true,
+//       message: "Adoption form submitted successfully.",
+//       adoptionForm: savedForm,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ success: false, message: "Error submitting adoption form.", error: error.message });
+//   }
+// }
 const sendForm = async (req, res) => {
   try {
     const { petId } = req.params;
     const { id: userId } = req.user; 
    
-    
     const { 
       city, 
       personalInfo, 
@@ -106,22 +159,22 @@ const sendForm = async (req, res) => {
       adoptionDetails 
     } = req.body;
 
-   
+    // Check if the pet exists
     const pet = await Pet.findById(petId);
     if (!pet) {
       return res.status(404).json({ success: false, message: "Pet not found" });
     }
 
+    console.log(userId, petId);
 
-    console.log(userId , petId);
-    
+    // Check if an adoption form already exists for this user and pet
     const existingForm = await AdoptionForm.findOne({ user: userId, pet: petId });
     console.log(existingForm);
     if (existingForm) {
       return res.status(400).json({ success: false, message: "You have already submitted an adoption form for this pet." });
     }
 
-    
+    // Create a new adoption form
     const adoptionForm = new AdoptionForm({
       user: userId,
       pet: petId,
@@ -132,10 +185,13 @@ const sendForm = async (req, res) => {
       adoptionDetails,
     });
 
-    
+    // Save the adoption form to the database
     const savedForm = await adoptionForm.save();
 
-    
+    // Send the saved adoption form to Kafka
+    await sendAdoptionApplication(savedForm);
+
+    // Respond with success
     res.status(201).json({
       success: true,
       message: "Adoption form submitted successfully.",
@@ -145,6 +201,6 @@ const sendForm = async (req, res) => {
     console.error(error);
     res.status(500).json({ success: false, message: "Error submitting adoption form.", error: error.message });
   }
-}
+};
 
 module.exports = {reportStray , getApplicationStatus , sendForm}  
