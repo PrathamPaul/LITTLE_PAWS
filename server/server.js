@@ -38,7 +38,10 @@ app.use(
         credentials:true
     })
 )
-
+app.get("/", (req, res) => {
+    res.send("Hello, Vercel!");
+  });
+  
 app.use(cookieparser());
 app.use(express.json());
 app.use("/api/auth",authrouter);
