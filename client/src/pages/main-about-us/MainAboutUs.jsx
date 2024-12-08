@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { 
   Heart,  
   Users,
@@ -10,6 +11,7 @@ import {
   Share2 
 } from 'lucide-react';
 import MainNavbar from '@/components/main-navbar/MainNavbar';
+import { Link } from 'react-router-dom';
 
 
 
@@ -70,9 +72,11 @@ const AboutUs = () => {
             <p className="text-xl mb-8 max-w-2xl mx-auto">
               Connecting hearts, saving lives. We believe every animal deserves a loving home and a second chance.
             </p>
+            <Link to="/search">
             <button className="bg-indigo-700 hover:bg-indigo-900 text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105">
               Adopt a Friend
             </button>
+            </Link>
           </div>
         </div>
       </div>

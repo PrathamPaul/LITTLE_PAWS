@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, HandHeart, Users ,User, UserCog, LogOut } from 'lucide-react';
+import { Heart, HandHeart, Users ,User, UserCog, LogOut, HandHelping, CheckCircle2, Share2 } from 'lucide-react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -13,6 +13,7 @@ const Landingpage = () => {
   const [error, setError] = useState(null);
   const {user,isAuthenticated,isLoading}=useSelector(state=>state.auth);
   const linkPath = user?.role === 'seller' ? "/admin/products" : "/shop/home";
+  const [activeSection, setActiveSection] = useState('mission');
   useEffect(() => {
     
     const fetchData = async () => {
@@ -159,13 +160,14 @@ const handleLogout = async () => {
               <p className="font-medium text-indigo-900">Adopt a pet</p>
             </div>
             </Link>
-
+            <Link to="/aboutUs">
             <div className="m-5 p-16 bg-white rounded-lg flex flex-col items-center text-center hover:shadow-lg transition-shadow cursor-pointer shadow-lg hover:shadow-2xl transition-shadow cursor-pointer">
               <div className="p-3 bg-indigo-300 rounded-full text-indigo-900 mb-4">
                 <Users className="w-16 h-16" />
               </div>
-              <p className="font-medium text-indigo-900">Be a volunteer</p>
+              <p className="font-medium text-indigo-900">About us</p>
             </div>
+            </Link>
 
             <div className="m-5 p-16 bg-white rounded-lg flex flex-col items-center text-center hover:shadow-lg transition-shadow cursor-pointer shadow-lg hover:shadow-2xl transition-shadow cursor-pointer">
               <div className="p-3 bg-indigo-300 rounded-full text-indigo-900 mb-4">
@@ -209,6 +211,89 @@ const handleLogout = async () => {
           </div>
           
       </div>
+      
+
+      <section className="max-w-7xl mx-auto relative z-20 bg-white rounded-xl shadow-lg p-12 mt-60">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex justify-center mb-8 space-x-4">
+              {['mission', 'values', 'approach'].map((section) => (
+                <button
+                  key={section}
+                  onClick={() => setActiveSection(section)}
+                  className={`px-6 py-3 rounded-full transition ${
+                    activeSection === section 
+                      ? 'bg-indigo-700 text-white' 
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                >
+                  {section.charAt(0).toUpperCase() + section.slice(1)}
+                </button>
+              ))}
+            </div>
+
+            {activeSection === 'mission' && (
+              <div className="text-center">
+                <HandHelping className="mx-auto text-red-500 mb-6" size={64} />
+                <h3 className="text-3xl font-bold mb-6">Our Mission</h3>
+                <p className="text-xl text-gray-700">
+                  To rescue, rehabilitate, and rehome stray and abandoned animals, ensuring they receive the love and care they deserve. We simplify the adoption process while promoting responsible pet ownership.
+                </p>
+              </div>
+            )}
+
+            {activeSection === 'values' && (
+              <div className="text-center">
+                <CheckCircle2 className="mx-auto text-green-500 mb-6" size={64} />
+                <h3 className="text-3xl font-bold mb-6">Our Core Values</h3>
+                <ul className="text-xl text-gray-700 space-y-4">
+                  <li>Compassion for all living beings</li>
+                  <li>Commitment to animal welfare</li>
+                  <li>Transparency in our operations</li>
+                  <li>Community engagement and education</li>
+                </ul>
+              </div>
+            )}
+
+            {activeSection === 'approach' && (
+              <div className="text-center">
+                <Share2 className="mx-auto text-blue-500 mb-6" size={64} />
+                <h3 className="text-3xl font-bold mb-6">Our Approach</h3>
+                <p className="text-xl text-gray-700">
+                  We collaborate with shelters, foster homes, and animal welfare organizations to find the perfect match between pets and adopters. Our comprehensive support ensures successful, lifelong connections.
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
+      
+        <div className="relative z-20 text-white py-16 text-center mt-40">
+        <h2 className="text-4xl font-bold mb-6">Make a Difference Today</h2>
+        <p className="text-xl mb-8 max-w-2xl mx-auto">
+          Whether you adopt, volunteer, or donate, your support creates lasting change in an animal's life.
+        </p>
+        <div className="space-x-4">
+          <button className="bg-white text-indigo-800 hover:bg-gray-100 font-bold py-3 px-8 rounded-full">
+            Adopt Now
+          </button>
+          <button className="border-2 border-white hover:bg-white hover:text-red-500 font-bold py-3 px-8 rounded-full">
+            Support Us
+          </button>
+        </div>
+      </div>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
       <div className="relative z-10" >
       <div className="bg-indigo-700 h-20 z-10 mt-40" ></div>
       <footer className="bg-indigo-900 text-white py-8">
