@@ -26,7 +26,7 @@ const PORT=process.env.PORT||5000;
 
 app.use(
     cors({
-        origin: 'http://localhost:5173',
+        origin: 'https://little-paws-api.vercel.app/',
         methods:['GET','POST','DELETE','PUT'],
         allowedHeaders:[
             "Content-Type",
@@ -41,7 +41,7 @@ app.use(
 app.get("/", (req, res) => {
     res.send("Hello, Vercel!");
   });
-  
+
 app.use(cookieparser());
 app.use(express.json());
 app.use("/api/auth",authrouter);
