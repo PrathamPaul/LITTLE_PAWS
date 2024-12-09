@@ -83,7 +83,7 @@
 
 //     try {
 //       const response = await axios.post(
-//         "http://localhost:5000/api/user/report-stray",
+//         "https://little-paws-api2.vercel.app/api/user/report-stray",
 //         data,
 //         {
 //           withCredentials: true,
@@ -357,7 +357,7 @@ const MainReportStray = () => {
     });
 
     try {
-      const response = await axios.post("http://localhost:5000/api/user/report-stray", data, {
+      const response = await axios.post("https://little-paws-api2.vercel.app/api/user/report-stray", data, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       });

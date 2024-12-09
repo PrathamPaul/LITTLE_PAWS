@@ -12,7 +12,7 @@ const ApplicationStatus = () => {
     const fetchAdoptionStatus = async () => {
       try {
         
-        const response = await axios.get("http://localhost:5000/api/user/adoption-status", {
+        const response = await axios.get("https://little-paws-api2.vercel.app/api/user/adoption-status", {
             withCredentials: true, // Ensures cookies are sent with the request
           });
         // setAdoptionStatus(response?.data?.applications[0]?.status);

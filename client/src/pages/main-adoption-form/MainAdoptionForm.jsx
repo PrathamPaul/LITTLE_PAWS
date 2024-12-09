@@ -459,7 +459,7 @@ const AdoptionForm = () => {
   
       // Send adoption application data with credentials
       const response = await axios.post(
-        `http://localhost:5000/api/user/adopt/${petId}`,
+        `https://little-paws-api2.vercel.app/api/user/adopt/${petId}`,
         formData,
         {
           headers: {
@@ -483,7 +483,7 @@ const AdoptionForm = () => {
   };
   const handleLogout = async () => {
     try {
-      const { data } = await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
+      const { data } = await axios.post("https://little-paws-api2.vercel.app/api/auth/logout", {}, { withCredentials: true });
   
       alert(data.message); // "Logged out successfully!"
       // Redirect user to login page or clear user state

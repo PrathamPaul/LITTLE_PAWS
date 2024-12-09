@@ -14,7 +14,7 @@ const MainAdminPanel = () => {
         // Set the cookie manually (if needed)
         document.cookie = "myCookieName=myCookieValue; Path=/;";
   
-        const response = await axios.get('http://localhost:5000/api/shelterAdmin/applications', {
+        const response = await axios.get('https://little-paws-api2.vercel.app/api/shelterAdmin/applications', {
           withCredentials: true, // Include cookies and credentials in the request
         });
   
@@ -36,7 +36,7 @@ const MainAdminPanel = () => {
   }
   const handleLogout = async () => {
     try {
-      const { data } = await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
+      const { data } = await axios.post("https://little-paws-api2.vercel.app/api/auth/logout", {}, { withCredentials: true });
   
       alert(data.message); // "Logged out successfully!"
       // Redirect user to login page or clear user state
