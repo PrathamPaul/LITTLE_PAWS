@@ -18,7 +18,7 @@ const Landingpage = () => {
     
     const fetchData = async () => {
       try {
-        const response = await fetch('https://little-paws-api.vercel.app/api/pets/'); 
+        const response = await fetch('https://little-paws-api2.vercel.app/api/pets/'); 
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

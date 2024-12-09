@@ -101,7 +101,7 @@ const MainSearchPage = () => {
     
     const fetchData = async () => {
       try {
-        const response = await fetch('https://little-paws-api.vercel.app/api/pets/'); 
+        const response = await fetch('https://little-paws-api2.vercel.app/api/pets/'); 
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -148,7 +148,7 @@ const MainSearchPage = () => {
   ];
   const handleLogout = async () => {
     try {
-      const { data } = await axios.post("https://little-paws-api.vercel.app/api/auth/logout", {}, { withCredentials: true });
+      const { data } = await axios.post("https://little-paws-api2.vercel.app/api/auth/logout", {}, { withCredentials: true });
   
       alert(data.message); // "Logged out successfully!"
       // Redirect user to login page or clear user state
