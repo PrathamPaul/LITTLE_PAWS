@@ -33,7 +33,7 @@ const [status, setStatus] = useState(app.status);
 const handleAccept = async (applicationId) => {
     try {
         const response = await axios.put(
-            `http://localhost:5000/api/shelterAdmin/applications/${applicationId}`, 
+            `https://little-paws-api2.vercel.app/api/shelterAdmin/applications/${applicationId}`, 
             {}, // Request body (empty for this case)
             {
               headers: {
@@ -65,7 +65,7 @@ const handleAccept = async (applicationId) => {
 const handleReject = async (applicationId) => {
   try {
       const response = await axios.put(
-          `http://localhost:5000/api/shelterAdmin/applications/reject/${applicationId}`, 
+          `https://little-paws-api2.vercel.app/api/shelterAdmin/applications/reject/${applicationId}`, 
           {}, // Request body (empty for this case)
           {
               headers: {
